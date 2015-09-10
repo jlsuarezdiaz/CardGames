@@ -1,0 +1,9 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Author: Juan Luis Suárez Díaz
+${licensePrefix}September, 2015
+${licensePrefix}Card Games
+<#if licenseLast??>
+${licenseLast}
+</#if>
