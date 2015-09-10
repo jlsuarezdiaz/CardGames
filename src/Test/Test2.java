@@ -12,6 +12,7 @@ import Model.Card;
 import Model.CardDeck;
 import Model.FrenchCard;
 import Model.FrenchDeck;
+import Model.SpanishDeck;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 public class Test2 extends javax.swing.JFrame {
 
     private FrenchDeck deck;
+    private SpanishDeck spanishDeck;
     /**
      * Creates new form Test2
      */
@@ -32,6 +34,8 @@ public class Test2 extends javax.swing.JFrame {
         
         deck = new FrenchDeck();
         deck.shuffle();
+        
+        spanishDeck = new SpanishDeck();
         
         VerticalHand.addSelectionAtMouseListening();
         HorizontalHand.addCoveringAtMouseListening();
@@ -167,7 +171,7 @@ public class Test2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrenchCard c = deck.nextCard();
+        Card c = spanishDeck.nextCard();
         if(c != null){
             
                       
