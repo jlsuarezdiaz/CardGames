@@ -56,7 +56,12 @@ public class IntroGames extends javax.swing.JDialog {
         btPlay = new javax.swing.JButton();
         btExit = new javax.swing.JButton();
         rbPoker = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        rbUno = new javax.swing.JRadioButton();
+        rbSotaCabrona = new javax.swing.JRadioButton();
+        rbHearts = new javax.swing.JRadioButton();
+        rbTexasHoldem = new javax.swing.JRadioButton();
+        rbSolitaire = new javax.swing.JRadioButton();
+        rbBroom = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Card Games");
@@ -96,12 +101,32 @@ public class IntroGames extends javax.swing.JDialog {
 
         gamesBtGrp.add(rbPoker);
         rbPoker.setSelected(true);
-        rbPoker.setText("Póquer");
+        rbPoker.setText("Póquer (5 Draw)");
         rbPoker.setActionCommand("POKER");
 
-        gamesBtGrp.add(jRadioButton1);
-        jRadioButton1.setText("Uno");
-        jRadioButton1.setActionCommand("UNO");
+        gamesBtGrp.add(rbUno);
+        rbUno.setText("Uno");
+        rbUno.setActionCommand("UNO");
+
+        gamesBtGrp.add(rbSotaCabrona);
+        rbSotaCabrona.setText("Sota Cabrona");
+        rbSotaCabrona.setActionCommand("SOTA_CABRONA");
+
+        gamesBtGrp.add(rbHearts);
+        rbHearts.setText("Corazones");
+        rbHearts.setActionCommand("HEARTS");
+
+        gamesBtGrp.add(rbTexasHoldem);
+        rbTexasHoldem.setText("Póquer (Texas Holdem)");
+        rbTexasHoldem.setActionCommand("TEXAS_HOLDEM");
+
+        gamesBtGrp.add(rbSolitaire);
+        rbSolitaire.setText("Solitario");
+        rbSolitaire.setActionCommand("SOLITAIRE");
+
+        gamesBtGrp.add(rbBroom);
+        rbBroom.setText("Escoba");
+        rbBroom.setActionCommand("BROOM");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,14 +135,21 @@ public class IntroGames extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rbSolitaire, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(titleLab)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbUno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(rbPoker, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(btPlay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                            .addComponent(btPlay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbSotaCabrona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbHearts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbTexasHoldem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbBroom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 108, Short.MAX_VALUE)
                         .addComponent(btExit, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -131,8 +163,18 @@ public class IntroGames extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbPoker)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                .addComponent(rbUno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbSotaCabrona)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbHearts)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbTexasHoldem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbBroom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbSolitaire)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btExit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -171,8 +213,13 @@ public class IntroGames extends javax.swing.JDialog {
     private javax.swing.JButton btPlay;
     private javax.swing.ButtonGroup gamesBtGrp;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton rbBroom;
+    private javax.swing.JRadioButton rbHearts;
     private javax.swing.JRadioButton rbPoker;
+    private javax.swing.JRadioButton rbSolitaire;
+    private javax.swing.JRadioButton rbSotaCabrona;
+    private javax.swing.JRadioButton rbTexasHoldem;
+    private javax.swing.JRadioButton rbUno;
     private javax.swing.JLabel titleLab;
     // End of variables declaration//GEN-END:variables
 }

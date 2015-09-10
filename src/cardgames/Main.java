@@ -42,6 +42,26 @@ public class Main {
                 showNotImplementedMessage();
                 runGameSelection();
                 break; 
+            case SOTA_CABRONA:
+                showNotImplementedMessage();
+                runGameSelection();
+                break;
+            case HEARTS:
+                showNotImplementedMessage();
+                runGameSelection();
+                break;
+            case TEXAS_HOLDEM:
+                showNotImplementedMessage();
+                runGameSelection();
+                break;
+            case BROOM:
+                showNotImplementedMessage();
+                runGameSelection();
+                break;
+            case SOLITAIRE:
+                showNotImplementedMessage();
+                runGameSelection();
+                break;
             case ERROR:
             default:
                 JOptionPane.showMessageDialog(null, "Se ha producido un error al elegir el juego.",

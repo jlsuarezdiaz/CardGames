@@ -36,15 +36,23 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="rbSolitaire" min="-2" pref="150" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
                   <Component id="titleLab" max="32767" attributes="0"/>
                   <Component id="jLabel1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jRadioButton1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="rbUno" alignment="0" max="32767" attributes="0"/>
                           <Component id="rbPoker" alignment="0" pref="150" max="32767" attributes="0"/>
                           <Component id="btPlay" alignment="0" max="32767" attributes="0"/>
+                          <Component id="rbSotaCabrona" alignment="0" max="32767" attributes="0"/>
+                          <Component id="rbHearts" alignment="0" max="32767" attributes="0"/>
+                          <Component id="rbTexasHoldem" alignment="0" max="32767" attributes="0"/>
+                          <Component id="rbBroom" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="108" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" pref="108" max="32767" attributes="0"/>
                       <Component id="btExit" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -62,8 +70,18 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="rbPoker" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="143" max="32767" attributes="0"/>
+              <Component id="rbUno" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rbSotaCabrona" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rbHearts" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rbTexasHoldem" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rbBroom" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rbSolitaire" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btPlay" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="btExit" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -144,17 +162,62 @@
           <ComponentRef name="gamesBtGrp"/>
         </Property>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="P&#xf3;quer"/>
+        <Property name="text" type="java.lang.String" value="P&#xf3;quer (5 Draw)"/>
         <Property name="actionCommand" type="java.lang.String" value="POKER"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+    <Component class="javax.swing.JRadioButton" name="rbUno">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="gamesBtGrp"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Uno"/>
         <Property name="actionCommand" type="java.lang.String" value="UNO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbSotaCabrona">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="gamesBtGrp"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Sota Cabrona"/>
+        <Property name="actionCommand" type="java.lang.String" value="SOTA_CABRONA"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbHearts">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="gamesBtGrp"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Corazones"/>
+        <Property name="actionCommand" type="java.lang.String" value="HEARTS"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbTexasHoldem">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="gamesBtGrp"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="P&#xf3;quer (Texas Holdem)"/>
+        <Property name="actionCommand" type="java.lang.String" value="TEXAS_HOLDEM"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbSolitaire">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="gamesBtGrp"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Solitario"/>
+        <Property name="actionCommand" type="java.lang.String" value="SOLITAIRE"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="rbBroom">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="gamesBtGrp"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Escoba"/>
+        <Property name="actionCommand" type="java.lang.String" value="BROOM"/>
       </Properties>
     </Component>
   </SubComponents>

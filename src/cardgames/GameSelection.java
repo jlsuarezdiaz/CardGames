@@ -10,5 +10,5 @@ package cardgames;
  * @author Juan Luis
  */
 public enum GameSelection {
-    POKER, UNO, ERROR
+    POKER, UNO, SOTA_CABRONA, HEARTS, TEXAS_HOLDEM, BROOM, SOLITAIRE, ERROR
 }
