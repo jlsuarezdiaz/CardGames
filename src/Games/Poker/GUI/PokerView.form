@@ -31,19 +31,14 @@
                       <Component id="btContinue" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="81" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="potView" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="allInScrollPane" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="rivalScrollPane" min="-2" pref="630" max="-2" attributes="0"/>
-                          <Component id="myPlayerView" min="-2" pref="630" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="rivalScrollPane" min="-2" pref="630" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="10" max="32767" attributes="0"/>
@@ -67,46 +62,27 @@
                               <Component id="jLabel2" min="-2" pref="46" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <EmptySpace pref="293" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btContinue" min="-2" pref="90" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace pref="305" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel1" min="-2" pref="43" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="potView" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel1" min="-2" pref="43" max="-2" attributes="0"/>
+                              <EmptySpace pref="352" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <Component id="myPlayerView" pref="287" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="Games.Poker.GUI.PokerPlayerView" name="myPlayerView">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="myPlayerViewMouseReleased"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="rivalScrollPane">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -117,8 +93,6 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="Games.Poker.GUI.ChipsView" name="potView">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
