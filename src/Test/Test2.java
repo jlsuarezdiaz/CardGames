@@ -8,6 +8,7 @@ package Test;
 import GUI.CardView;
 import GUI.FrenchCardBack;
 import GUI.Orientation;
+import GUI.SpanishCardBack;
 import Model.Card;
 import Model.CardDeck;
 import Model.FrenchCard;
@@ -176,7 +177,7 @@ public class Test2 extends javax.swing.JFrame {
             
                       
 
-            VerticalHand.add(c,FrenchCardBack.BLUE);
+            VerticalHand.add(c,SpanishCardBack.RED);
             VerticalHand.repaint();
             VerticalHand.revalidate();
         }
