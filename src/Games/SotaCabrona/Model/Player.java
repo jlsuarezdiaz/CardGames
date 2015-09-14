@@ -59,4 +59,14 @@ public class Player {
         for(int i = 1; i <= 5; i++)
             dropNextCard();
     }
+    
+    protected boolean isMyTurn(){
+        return game.isTurnOf(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    
 }

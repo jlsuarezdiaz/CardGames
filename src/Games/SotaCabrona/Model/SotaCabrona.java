@@ -28,6 +28,10 @@ public class SotaCabrona {
     
     private Player myPlayer;
     
+    private boolean playing;
+    
+    private Player heapPlayer;
+    
     private void dealCards(){
         FrenchDeck deck = new FrenchDeck();
         deck.shuffle();
@@ -35,6 +39,32 @@ public class SotaCabrona {
         while(!deck.isEmpty()){
             players.get(i).receiveCard(deck.nextCard());
             i = (i+1)%players.size();
+        }
+    }
+    
+    private void setRemainingCardsCount(){
+        remainingCardsCount--;
+        switch(cardHeap.get(cardHeap.size()-1).getValue()){
+            case "A":
+                remainingCardsCount = 4;
+                heapPlayer = currentPlayer;
+                break;
+            case "K":
+                remainingCardsCount = 3;
+                heapPlayer = currentPlayer;
+                break;
+            case "Q":
+                remainingCardsCount = 2;
+                heapPlayer = currentPlayer;
+                break;
+            case "J":
+                remainingCardsCount = 1;
+                heapPlayer = currentPlayer;
+                break;
+            default:
+                remainingCardsCount = -1;
+                heapPlayer = null;
+                break;
         }
     }
     
@@ -51,6 +81,8 @@ public class SotaCabrona {
         
         cardHeap = new ArrayList();
         remainingCardsCount = 0;
+        
+        playing = false;
     }
     
     public ArrayList<FrenchCard> getHeap(){
@@ -70,10 +102,48 @@ public class SotaCabrona {
     }
     
     public boolean touchHeap(){
+        if(!playing) return false;
+        stop();
         return isSandwich() || isSameValue();
     }
     
     public void dropCard(FrenchCard c){
+        play();
         cardHeap.add(c);
+        setRemainingCardsCount();
+        if(remainingCardsCount == 0){
+            heapPlayer.takeHeap(cardHeap);
+            heapPlayer = null;
+        }
+        else if(remainingCardsCount < 0){
+            next();
+        }
     }
+    
+    public void stop(){
+        playing = false;
+    }
+    
+    public void play(){
+        playing = true;
+    }
+    
+    public void next(){
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayer = players.get(currentPlayerIndex);
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public Player getMyPlayer() {
+        return myPlayer;
+    }
+    
+    
 }

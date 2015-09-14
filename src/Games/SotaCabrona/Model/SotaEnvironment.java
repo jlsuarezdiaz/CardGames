@@ -30,4 +30,8 @@ public class SotaEnvironment {
     public void dropCard(FrenchCard c){
         sota.dropCard(c);
     }
+    
+    public boolean isTurnOf(Player p){
+        return p == sota.getCurrentPlayer();
+    }
 }
