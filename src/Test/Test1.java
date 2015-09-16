@@ -16,7 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import sun.text.normalizer.CharTrie;
+//import sun.text.normalizer.CharTrie;
 
 /**
  *
