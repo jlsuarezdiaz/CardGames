@@ -34,4 +34,8 @@ public class SotaEnvironment {
     public boolean isTurnOf(Player p){
         return p == sota.getCurrentPlayer();
     }
+    
+    public void putOnHeap(ArrayList<FrenchCard> cards){
+        sota.putOnHeap(cards);
+    }
 }

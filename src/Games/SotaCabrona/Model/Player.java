@@ -40,8 +40,13 @@ public class Player {
     }
     
     public void dropNextCard(){
-        if(!myCards.isEmpty())
-            game.dropCard(myCards.remove(0));
+        if(isMyTurn()){
+            if(!myCards.isEmpty())
+                game.dropCard(myCards.remove(0));
+        }
+        else{
+            punish();
+        }
     }
     
     public boolean touchHeap(){
@@ -56,17 +61,24 @@ public class Player {
     }
     
     public void punish(){
-        for(int i = 1; i <= 5; i++)
-            dropNextCard();
+        ArrayList<FrenchCard> punish = new ArrayList();
+        int punishSize = Integer.min(5, myCards.size());
+        for(int i = 0; i < punishSize; i++){
+            punish.add(myCards.remove(0));
+        }
+        game.putOnHeap(punish);
     }
     
-    protected boolean isMyTurn(){
+    public boolean isMyTurn(){
         return game.isTurnOf(this);
     }
 
     public String getName() {
         return name;
     }
-    
+
+    public ArrayList<FrenchCard> getMyCards() {
+        return myCards;
+    } 
     
 }

@@ -34,6 +34,7 @@ public class SotaCabrona {
     
     private void dealCards(){
         FrenchDeck deck = new FrenchDeck();
+        deck.removeJokers();
         deck.shuffle();
         int i = currentPlayerIndex;
         while(!deck.isEmpty()){
@@ -62,7 +63,7 @@ public class SotaCabrona {
                 heapPlayer = currentPlayer;
                 break;
             default:
-                remainingCardsCount = -1;
+                if(remainingCardsCount < 0) remainingCardsCount = -1;
                 heapPlayer = null;
                 break;
         }
@@ -80,7 +81,7 @@ public class SotaCabrona {
         dealCards();
         
         cardHeap = new ArrayList();
-        remainingCardsCount = 0;
+        remainingCardsCount = -1;
         
         playing = false;
     }
@@ -143,6 +144,14 @@ public class SotaCabrona {
 
     public Player getMyPlayer() {
         return myPlayer;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+    
+    public void putOnHeap(ArrayList<FrenchCard> cards){
+        cardHeap.addAll(0, cards);
     }
     
     
