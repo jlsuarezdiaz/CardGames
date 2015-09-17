@@ -47,6 +47,8 @@ public class PlayerView extends javax.swing.JPanel {
         nameLab.setText(p.getName());
         cardSizeText.setText(Integer.toString(p.getMyCards().size()));
         cardSizeBar.setValue(p.getMyCards().size());
+        timeBar.setMaximum(Player.getPlayerTime());
+        timeBar.setValue(p.getTimerCount());
         this.setBackground((p.isMyTurn())?new Color(0xFACC2E):new Color(0xF0F0F0));
         this.repaint();
         this.revalidate();

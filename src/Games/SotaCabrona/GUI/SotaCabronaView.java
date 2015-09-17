@@ -60,7 +60,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
         try {
              UIManager.setLookAndFeel(
             UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex){ System.out.println(ex.getMessage());}
+        } catch (Exception ex){}
         initComponents();
         
         timerManager = new Timer(1, new ActionListener() {
@@ -81,29 +81,31 @@ public class SotaCabronaView extends javax.swing.JFrame {
     }
     
     public void setSotaCabrona(SotaCabrona s){
-        
-        
-        this.sotaCabronaModel = s;
-        fillRivalPanel();
-        
-        if(!s.getHeap().isEmpty())
-            lastHeapView.setCard(s.getHeap().get(s.getHeap().size()-1), FrenchCardBack.BLUE);
-        else
-            lastHeapView.setCard(new FrenchCard("A", FrenchSuit.SPADES), FrenchCardBack.RED, true);
-        
-        this.myPlayerView.setPlayer(s.getMyPlayer());
-        this.repaint();
-        this.revalidate();
-        
-        this.removeKeyListener(keyEvent);
-        this.addKeyListener(keyEvent);
-        this.setFocusable(true);
+        if(s != null){
+            this.sotaCabronaModel = s;
+            fillRivalPanel();
+
+            if(!s.getHeap().isEmpty())
+                lastHeapView.setCard(s.getHeap().get(s.getHeap().size()-1), FrenchCardBack.BLUE);
+            else
+                lastHeapView.setCard(new FrenchCard("A", FrenchSuit.SPADES), FrenchCardBack.RED, true);
+
+            
+            this.myPlayerView.setPlayer(s.getMyPlayer());
+            this.repaint();
+            this.revalidate();
+
+            this.removeKeyListener(keyEvent);
+            this.addKeyListener(keyEvent);
+            this.setFocusable(true);
         //for(Component c : this.getComponents()){
         //    c.setFocusable(true);
         //    c.addKeyListener(keyEvent);
         //}
+        }
     }
-    static int i = 0;
+    
+    //static int i = 0;
     private void gameKeyEvent(KeyEvent ke){
         if(ke.getKeyCode() == KeyEvent.VK_ENTER){
             sotaCabronaModel.getMyPlayer().touchHeap();
@@ -112,8 +114,8 @@ public class SotaCabronaView extends javax.swing.JFrame {
             sotaCabronaModel.getMyPlayer().dropNextCard();
         }
         
-        i++;
-        System.out.println(i);
+        //i++;
+        //System.out.println(i);
     }
     
     /**
@@ -200,9 +202,11 @@ public class SotaCabronaView extends javax.swing.JFrame {
                 SotaCabronaView sv = new SotaCabronaView();
                 sv.setVisible(true);
                 SotaCabrona s = new SotaCabrona(new String[]{"PEPE","PEPA","PEPO"});
+                s.setUsualCPUPlayers(2000, 2000, 0);
                 sv.setSotaCabrona(s);
-                s.getPlayers().get(0).takeHeap(s.getPlayers().get(1).getMyCards());
-                sv.setSotaCabrona(s);
+                //s.getPlayers().get(0).takeHeap(s.getPlayers().get(1).getMyCards());
+                //sv.setSotaCabrona(s);
+                
             }
         });
     }
