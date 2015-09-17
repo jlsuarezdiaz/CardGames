@@ -23,6 +23,10 @@ public class SotaEnvironment {
         return sota.getHeap();
     }
     
+    public ArrayList<FrenchCard> takeHeap(){
+        return sota.takeHeap();
+    }
+    
     public boolean touchHeap(){
         return sota.touchHeap();
     }
@@ -37,5 +41,17 @@ public class SotaEnvironment {
     
     public void putOnHeap(ArrayList<FrenchCard> cards){
         sota.putOnHeap(cards);
+    }
+    
+    public boolean isPlaying(){
+        return sota.isPlaying();
+    }
+    
+    public boolean isEndOfGame(){
+        return sota.isEndOfGame();
+    }
+    
+    public void nextIfNoCards(){
+        sota.nextIfNoCards();
     }
 }

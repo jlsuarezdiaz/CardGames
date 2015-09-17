@@ -7,8 +7,11 @@ package Games.SotaCabrona.Model;
 
 import Model.FrenchCard;
 import Model.FrenchDeck;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,22 +52,25 @@ public class SotaCabrona {
             case "A":
                 remainingCardsCount = 4;
                 heapPlayer = currentPlayer;
+                next();
                 break;
             case "K":
                 remainingCardsCount = 3;
                 heapPlayer = currentPlayer;
+                next();
                 break;
             case "Q":
                 remainingCardsCount = 2;
                 heapPlayer = currentPlayer;
+                next();
                 break;
             case "J":
                 remainingCardsCount = 1;
                 heapPlayer = currentPlayer;
+                next();
                 break;
             default:
                 if(remainingCardsCount < 0) remainingCardsCount = -1;
-                heapPlayer = null;
                 break;
         }
     }
@@ -84,10 +90,33 @@ public class SotaCabrona {
         remainingCardsCount = -1;
         
         playing = false;
+        
+    }
+    
+    public void setCPUPlayers(ArrayList<Player> players, int reflexesRate, int speedRate, int errorRate){
+        for(int i = 0; i < this.players.size(); i++){
+            if(players.contains(this.players.get(i))){
+                this.players.set(i, new CPUPlayer(this.players.get(i), reflexesRate, speedRate, errorRate));
+            }
+        }
+        this.currentPlayer = this.players.get(currentPlayerIndex);
+    }
+    
+    public void setUsualCPUPlayers(int reflexesRate, int speedRate, int errorRate){
+        this.myPlayer = players.get(0);
+        ArrayList<Player> players = (ArrayList<Player>)this.players.clone();
+        players.remove(myPlayer);
+        setCPUPlayers(players, reflexesRate, speedRate, errorRate);
     }
     
     public ArrayList<FrenchCard> getHeap(){
         return cardHeap;
+    }
+    
+    public ArrayList<FrenchCard> takeHeap(){
+        ArrayList<FrenchCard> heap = cardHeap;
+        cardHeap = new ArrayList();
+        return heap;
     }
     
     private boolean isSandwich(){
@@ -105,6 +134,7 @@ public class SotaCabrona {
     public boolean touchHeap(){
         if(!playing) return false;
         stop();
+        remainingCardsCount = -1;
         return isSandwich() || isSameValue();
     }
     
@@ -113,12 +143,18 @@ public class SotaCabrona {
         cardHeap.add(c);
         setRemainingCardsCount();
         if(remainingCardsCount == 0){
-            heapPlayer.takeHeap(cardHeap);
+            try {
+                sleep(2500);
+            } catch (InterruptedException ex) {} //Para dar la oportunidad de robar el montón si saliera repetida o sandwich.
+            heapPlayer.takeHeap(takeHeap());
             heapPlayer = null;
+            if(isEndOfGame()) stop();
         }
         else if(remainingCardsCount < 0){
             next();
         }
+        
+        if(remainingCardsCount >= 0 && currentPlayer.getMyCards().isEmpty()) next();
     }
     
     public void stop(){
@@ -128,10 +164,34 @@ public class SotaCabrona {
     public void play(){
         playing = true;
     }
+
+    public boolean isPlaying() {
+        return playing;
+    }
     
     public void next(){
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        currentPlayer = players.get(currentPlayerIndex);
+        if(isEndOfGame()){
+            stop();
+        }
+        do{
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+            currentPlayer = players.get(currentPlayerIndex);
+        }while(currentPlayer.getMyCards().isEmpty());
+    }
+    
+    public void nextIfNoCards(){
+        if(currentPlayer.getMyCards().isEmpty()) next();
+    }
+    
+    public boolean isEndOfGame(){
+        boolean end = false;
+        for(Player p : players){
+            if(p.getMyCards().size() == 52){
+                end = true;
+                break;
+            }
+        }
+        return end;
     }
 
     public Player getCurrentPlayer() {
