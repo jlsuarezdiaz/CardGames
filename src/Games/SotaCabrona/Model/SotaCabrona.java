@@ -35,6 +35,10 @@ public class SotaCabrona {
     
     private Player heapPlayer;
     
+    private boolean winHeapState;
+    
+    private Player winner;
+    
     private void dealCards(){
         FrenchDeck deck = new FrenchDeck();
         deck.removeJokers();
@@ -90,6 +94,9 @@ public class SotaCabrona {
         remainingCardsCount = -1;
         
         playing = false;
+        winHeapState = false;
+        
+        winner = null;
         
     }
     
@@ -143,12 +150,7 @@ public class SotaCabrona {
         cardHeap.add(c);
         setRemainingCardsCount();
         if(remainingCardsCount == 0){
-            try {
-                sleep(2500);
-            } catch (InterruptedException ex) {} //Para dar la oportunidad de robar el montón si saliera repetida o sandwich.
-            heapPlayer.takeHeap(takeHeap());
-            heapPlayer = null;
-            if(isEndOfGame()) stop();
+            winHeapState = true;
         }
         else if(remainingCardsCount < 0){
             next();
@@ -187,6 +189,7 @@ public class SotaCabrona {
         boolean end = false;
         for(Player p : players){
             if(p.getMyCards().size() == 52){
+                winner = p;
                 end = true;
                 break;
             }
@@ -214,5 +217,22 @@ public class SotaCabrona {
         cardHeap.addAll(0, cards);
     }
     
+    public void winHeap(){
+        heapPlayer.takeHeap(takeHeap());
+        heapPlayer = null;
+        winHeapState = false;
+        stop();
+    }
     
+    public boolean isWinHeapState(){
+        return winHeapState;
+    }
+    
+    public Player getWinner(){
+        return winner;
+    }
+    
+    public Player getHeapPlayer(){
+        return heapPlayer;
+    }
 }

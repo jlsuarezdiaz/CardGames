@@ -54,4 +54,8 @@ public class SotaEnvironment {
     public void nextIfNoCards(){
         sota.nextIfNoCards();
     }
+    
+    public boolean isWinHeapState(){
+        return sota.isWinHeapState();
+    }
 }

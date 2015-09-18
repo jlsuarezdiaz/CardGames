@@ -42,17 +42,7 @@ public class CPUPlayer extends Player{
     private int speedCount;
     private int speedGoal;
     
-    private boolean isSandwich(){
-        int size = game.getHeap().size();
-        if(size < 3) return false;
-        else return (game.getHeap().get(size-1).isValue(game.getHeap().get(size-3).getValue()));
-    }
-    
-    private boolean isSameValue(){
-        int size = game.getHeap().size();
-        if(size < 2) return false;
-        else return (game.getHeap().get(size-1).isValue(game.getHeap().get(size-2).getValue()));
-    }
+
     
     private int nextRand(int min, int max){
         return decider.nextInt(max-min+1) + min;
@@ -77,10 +67,10 @@ public class CPUPlayer extends Player{
                     }
                     
                     reflexesCount += brainTick;
-                    
+                    //System.out.println(reflexesCount);
                     if(reflexesCount >= reflexesGoal){
                         touchHeap();
-                        System.out.println(getName() + " touchHeap " + reflexesCount + " " + reflexesGoal);
+                        //System.out.println(getName() + " touchHeap " + reflexesCount + " " + reflexesGoal);
                         reflexesGoal = -1;
                     }
                 }
@@ -90,7 +80,7 @@ public class CPUPlayer extends Player{
                     }
                 }
                 
-                if(isMyTurn() && !game.isEndOfGame()){
+                if(isMyTurn() && !game.isEndOfGame() && !game.isWinHeapState()){
                     if(speedGoal == -1){
                         speedGoal = nextRand(minSpeedRate, speedRate);
                         speedCount = 0;
