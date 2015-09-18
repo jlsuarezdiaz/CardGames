@@ -7,6 +7,7 @@ package Games.SotaCabrona.GUI;
 
 
 import GUI.FrenchCardBack;
+import GUI.NarratorView;
 import Games.SotaCabrona.Model.SotaCabrona;
 import Model.Card;
 import Model.FrenchCard;
@@ -33,6 +34,13 @@ public class SotaCabronaView extends javax.swing.JFrame {
     private ActionListener taskManager;
     
     private KeyAdapter keyEvent; 
+    
+    private int heapWinCount;
+    private static final int heapWinWait = 2000;
+    
+    private static final int timerTick = 10;
+    
+    private SotaCabronaView thisView;
     
     private void fillRivalPanel(){
         rivalPanel.removeAll();
@@ -63,10 +71,25 @@ public class SotaCabronaView extends javax.swing.JFrame {
         } catch (Exception ex){}
         initComponents();
         
-        timerManager = new Timer(1, new ActionListener() {
+        thisView = this;
+        timerManager = new Timer(timerTick, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 setSotaCabrona(sotaCabronaModel);
+                if(sotaCabronaModel.isWinHeapState()){
+                    heapWinCount+= timerTick;
+                    if(heapWinCount >= heapWinWait){
+                        narratorTxt.setText(narratorTxt.getText() + "\n" + sotaCabronaModel.getHeapPlayer().getName() + " se lleva el montón.");
+                        heapWinCount = 0;
+                        sotaCabronaModel.winHeap();
+                    }
+                }
+                if(sotaCabronaModel.getWinner() != null){
+                    new NarratorView(thisView).showDialog("FIN", "FIN DE LA PARIDA", 
+                        sotaCabronaModel.getWinner().getName() + ", has ganado la partida. ¡ENHORABUENA!", "/Media/fireworks_icon.png");
+                    timerManager.stop();
+                }
+                
             }
         });
         
@@ -78,6 +101,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
                 gameKeyEvent(ke);
             } 
         };
+        heapWinCount = 0;
     }
     
     public void setSotaCabrona(SotaCabrona s){
@@ -98,6 +122,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
             this.removeKeyListener(keyEvent);
             this.addKeyListener(keyEvent);
             this.setFocusable(true);
+            narratorTxt.setFocusable(false);
         //for(Component c : this.getComponents()){
         //    c.setFocusable(true);
         //    c.addKeyListener(keyEvent);
@@ -129,40 +154,54 @@ public class SotaCabronaView extends javax.swing.JFrame {
 
         lastHeapView = new GUI.CardView();
         myPlayerView = new Games.SotaCabrona.GUI.PlayerView();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        rivalScrollPane = new javax.swing.JScrollPane();
         rivalPanel = new javax.swing.JPanel();
+        narratorScrollPane = new javax.swing.JScrollPane();
+        narratorTxt = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jScrollPane1.setViewportView(rivalPanel);
+        rivalScrollPane.setViewportView(rivalPanel);
+
+        narratorTxt.setEditable(false);
+        narratorScrollPane.setViewportView(narratorTxt);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(309, 309, 309)
-                .addComponent(lastHeapView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(256, Short.MAX_VALUE)
-                .addComponent(myPlayerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(252, 252, 252))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rivalScrollPane)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(narratorScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                                .addComponent(myPlayerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(242, 242, 242))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addComponent(lastHeapView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rivalScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lastHeapView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(myPlayerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lastHeapView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(myPlayerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(narratorScrollPane))
+                .addContainerGap())
         );
 
         pack();
@@ -212,9 +251,11 @@ public class SotaCabronaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private GUI.CardView lastHeapView;
     private Games.SotaCabrona.GUI.PlayerView myPlayerView;
+    private javax.swing.JScrollPane narratorScrollPane;
+    private javax.swing.JEditorPane narratorTxt;
     private javax.swing.JPanel rivalPanel;
+    private javax.swing.JScrollPane rivalScrollPane;
     // End of variables declaration//GEN-END:variables
 }

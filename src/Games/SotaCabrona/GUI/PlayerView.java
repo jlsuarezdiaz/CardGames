@@ -50,6 +50,24 @@ public class PlayerView extends javax.swing.JPanel {
         timeBar.setMaximum(Player.getPlayerTime());
         timeBar.setValue(p.getTimerCount());
         this.setBackground((p.isMyTurn())?new Color(0xFACC2E):new Color(0xF0F0F0));
+        
+        if(p.isDropFlag())
+            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/yellow_light_xs.png")));
+        else if(p.isErrorDropFlag())
+            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/red_light_xs.png")));
+        else
+            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png")));
+        
+        if(p.isSameValueFlag())
+            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/blue_light_xs.png")));
+        else if(p.isSandwichFlag())
+            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/green_light_xs.png")));
+        else if(p.isErrorTouchFlag())
+            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/red_light_xs.png")));
+        else
+            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png")));
+        
+        
         this.repaint();
         this.revalidate();
     }
@@ -68,6 +86,8 @@ public class PlayerView extends javax.swing.JPanel {
         timeBar = new javax.swing.JProgressBar();
         cardSizeBar = new javax.swing.JProgressBar();
         cardSizeText = new javax.swing.JTextField();
+        dropLab = new javax.swing.JLabel();
+        touchLab = new javax.swing.JLabel();
 
         nameLab.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         nameLab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -84,6 +104,10 @@ public class PlayerView extends javax.swing.JPanel {
         cardSizeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cardSizeText.setText("0");
 
+        dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
+        touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,7 +122,11 @@ public class PlayerView extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cardSizeText, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cardSizeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(dropLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(touchLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,7 +138,10 @@ public class PlayerView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cardView, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dropLab, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(touchLab, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cardSizeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cardSizeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,7 +176,9 @@ public class PlayerView extends javax.swing.JPanel {
     private javax.swing.JProgressBar cardSizeBar;
     private javax.swing.JTextField cardSizeText;
     private GUI.CardView cardView;
+    private javax.swing.JLabel dropLab;
     private javax.swing.JLabel nameLab;
     private javax.swing.JProgressBar timeBar;
+    private javax.swing.JLabel touchLab;
     // End of variables declaration//GEN-END:variables
 }
