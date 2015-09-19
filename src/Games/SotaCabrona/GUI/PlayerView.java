@@ -11,6 +11,8 @@ import Model.Card;
 import Model.FrenchCard;
 import Model.FrenchSuit;
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -25,6 +27,9 @@ public class PlayerView extends javax.swing.JPanel {
 
     Player playerModel;
     
+    private String dropAddress;
+    private String touchAddress;
+    
     /**
      * Creates new form PlayerView
      */
@@ -37,7 +42,7 @@ public class PlayerView extends javax.swing.JPanel {
         timeBar.setSize(timeBar.getPreferredSize());
         timeBar.setForeground(Color.RED);
         cardSizeBar.setMaximum(52);
-        
+        dropAddress = touchAddress = null;
     }
 
     public void setPlayer(Player p){
@@ -51,25 +56,75 @@ public class PlayerView extends javax.swing.JPanel {
         timeBar.setValue(p.getTimerCount());
         this.setBackground((p.isMyTurn())?new Color(0xFACC2E):new Color(0xF0F0F0));
         
+        String newDropAddress = null, newTouchAddress = null;
         if(p.isDropFlag())
-            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/yellow_light_xs.png")));
+            newDropAddress = "/Media/yellow_light_xs.png";
         else if(p.isErrorDropFlag())
-            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/red_light_xs.png")));
+            newDropAddress = "/Media/red_light_xs.png";
+        else if(p.isTimeOutFlag())
+            newDropAddress = "/Media/purple_light_xs.png";
         else
-            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png")));
+            newDropAddress = "/Media/transparent_light_xs.png";
         
         if(p.isSameValueFlag())
-            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/blue_light_xs.png")));
+            newTouchAddress = "/Media/blue_light_xs.png";
         else if(p.isSandwichFlag())
-            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/green_light_xs.png")));
+            newTouchAddress = "/Media/green_light_xs.png";
         else if(p.isErrorTouchFlag())
-            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/red_light_xs.png")));
+            newTouchAddress = "/Media/red_light_xs.png";
         else
-            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png")));
+            newTouchAddress = "/Media/transparent_light_xs.png";
         
+        if(dropAddress == null || !dropAddress.equals(newDropAddress)){
+            dropAddress = newDropAddress;
+            dropLab.setIcon(new javax.swing.ImageIcon(getClass().getResource(dropAddress)));
+        }
+        if(touchAddress == null || !touchAddress.equals(newTouchAddress)){
+            touchAddress = newTouchAddress;
+            touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource(touchAddress)));
+        }
         
         this.repaint();
         this.revalidate();
+    }
+    
+    public void addLightChangeListener(PropertyChangeListener e){
+        this.dropLab.addPropertyChangeListener("icon", e);
+        this.touchLab.addPropertyChangeListener("icon", e);
+    }
+    
+    public Color getDropLightColor(){
+       if(dropAddress == null) return null;
+       switch(dropAddress){
+           case "/Media/yellow_light_xs.png":
+               return Color.YELLOW;
+           case "/Media/red_light_xs.png":
+               return Color.RED;
+           case "/Media/purple_light_xs.png":
+               return Color.PINK;
+           case "/Media/transparent_light_xs.png":
+           default:
+               return null;
+       }
+    }
+    
+    public Color getTouchLightColor(){
+        if(touchAddress == null) return null;
+        switch(touchAddress){
+            case "/Media/blue_light_xs.png":
+                return Color.BLUE;
+            case "/Media/green_light_xs.png":
+                return Color.GREEN;
+            case "/Media/red_light_xs.png":
+                return Color.RED;
+            case "/Media/transparent_light_xs.png":
+            default:
+                return null;
+        }
+    }
+    
+    public Player getPlayer(){
+        return playerModel;
     }
     
     /**
