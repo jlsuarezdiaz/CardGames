@@ -33,12 +33,14 @@ public class Player {
     private boolean errorDropFlag;
     private boolean errorTouchFlag;
     private boolean dropFlag;
+    private boolean timeOutFlag;
     private static final int flagDeactivateTime = 1000;
     private int sandwichFlagCount;
     private int sameValueFlagCount;
     private int errorDropFlagCount;
     private int errorTouchFlagCount;
     private int dropFlagCount;
+    private int timeOutFlagCount;
     
     private void initFlags(){
         sandwichFlag = false;
@@ -46,11 +48,13 @@ public class Player {
         errorDropFlag = false;
         errorTouchFlag = false;
         dropFlag = false;
+        timeOutFlag = false;
         sandwichFlagCount = -1;
         sameValueFlagCount = -1;
         errorDropFlagCount = -1;
         errorTouchFlagCount = -1;
         dropFlagCount = -1;
+        timeOutFlagCount = -1;
     }
     
     private void updateFlags(){
@@ -59,6 +63,7 @@ public class Player {
         if(errorDropFlagCount >= 0) errorDropFlagCount+=timerTick;
         if(errorTouchFlagCount >= 0) errorTouchFlagCount+=timerTick;
         if(dropFlagCount >= 0) dropFlagCount+=timerTick;
+        if(timeOutFlagCount >= 0) timeOutFlagCount+=timerTick;
         if(sandwichFlagCount >= flagDeactivateTime){
             sandwichFlag = false;
             sandwichFlagCount = -1;
@@ -78,6 +83,10 @@ public class Player {
         if(dropFlagCount >= flagDeactivateTime){
             dropFlag = false;
             dropFlagCount = -1;
+        }
+        if(timeOutFlagCount >= flagDeactivateTime){
+            timeOutFlag = false;
+            timeOutFlagCount = -1;
         }
     }
     
@@ -101,6 +110,10 @@ public class Player {
         dropFlag = true;
         dropFlagCount = 0;
     }
+    private void initTimeOutFlag(){
+        timeOutFlag = true;
+        timeOutFlagCount = 0;
+    }
     
     
     private void initTimer(){
@@ -116,6 +129,7 @@ public class Player {
                 
                     if(timerCount >= playerTime){
                         punish();
+                        initTimeOutFlag();
                         timerCount = 0;
                     }
                 }
@@ -187,8 +201,10 @@ public class Player {
             return true;
         }
         else{
-            punish();
-            initErrorTouchFlag();
+            if(game.isPlaying()){
+                punish();
+                initErrorTouchFlag();
+            }
             return false;
         }
     }
@@ -241,5 +257,10 @@ public class Player {
     public boolean isSandwichFlag() {
         return sandwichFlag;
     }
+
+    public boolean isTimeOutFlag() {
+        return timeOutFlag;
+    }
+    
     
 }

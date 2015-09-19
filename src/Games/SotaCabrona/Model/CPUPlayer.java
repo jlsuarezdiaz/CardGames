@@ -23,7 +23,7 @@ public class CPUPlayer extends Player{
     
     private int errorRate;
     
-    private static final int minReflexesRate = 300;
+    private static final int minReflexesRate = 200;
     private static final int maxReflexesRate = 5000;
     
     private static final int minSpeedRate = 500;
@@ -32,7 +32,7 @@ public class CPUPlayer extends Player{
     private static final int minErrorRate = 0;
     private static final int maxErrorRate = 10;
     
-    private static final int brainTick = 50;
+    private static final int brainTick =  50;
     
     private static final Random decider = new Random();
     
@@ -75,6 +75,7 @@ public class CPUPlayer extends Player{
                     }
                 }
                 else{
+                    reflexesGoal = -1;
                     if(nextRand(0,100) < errorRate){
                         touchHeap();
                     }
@@ -88,9 +89,9 @@ public class CPUPlayer extends Player{
                     
                     speedCount += brainTick;
                     
-                    if(speedCount >= speedGoal){
+                    if(speedCount >= speedGoal + (game.isPlaying()?0:2000)){
                         dropNextCard();
-                        System.out.println(getName() + " dropNextCard " + speedCount + " " + speedGoal);
+                        //System.out.println(getName() + " dropNextCard " + speedCount + " " + speedGoal);
                         speedGoal = -1;
                     }
                 }

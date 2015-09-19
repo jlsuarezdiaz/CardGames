@@ -140,9 +140,13 @@ public class SotaCabrona {
     
     public boolean touchHeap(){
         if(!playing) return false;
-        stop();
-        remainingCardsCount = -1;
-        return isSandwich() || isSameValue();
+        
+        if(isSandwich() || isSameValue()){
+            stop();
+            remainingCardsCount = -1;
+            return true;
+        }
+        else return false;
     }
     
     public void dropCard(FrenchCard c){
