@@ -27,8 +27,8 @@ public class SotaEnvironment {
         return sota.takeHeap();
     }
     
-    public boolean touchHeap(){
-        return sota.touchHeap();
+    public boolean touchHeap(Player p){
+        return sota.touchHeap(p);
     }
     
     public void dropCard(FrenchCard c){

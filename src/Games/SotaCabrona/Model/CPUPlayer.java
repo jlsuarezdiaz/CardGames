@@ -5,6 +5,7 @@
  */
 package Games.SotaCabrona.Model;
 
+import Model.FrenchCard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -42,6 +43,8 @@ public class CPUPlayer extends Player{
     private int speedCount;
     private int speedGoal;
     
+    private FrenchCard lastCardInHeap;
+    
 
     
     private int nextRand(int min, int max){
@@ -54,6 +57,8 @@ public class CPUPlayer extends Player{
         
         this.speedCount = 0;
         this.speedGoal = -1;
+        
+        lastCardInHeap = null;
         
         this.
         
@@ -76,9 +81,15 @@ public class CPUPlayer extends Player{
                 }
                 else{
                     reflexesGoal = -1;
-                    if(nextRand(0,100) < errorRate){
-                        touchHeap();
+                    int sizeHeap = game.getHeap().size();
+                    FrenchCard currentLast = (sizeHeap==0)?null:game.getHeap().get(sizeHeap-1);
+                    if(lastCardInHeap != currentLast){
+                        lastCardInHeap = currentLast;
+                        if(nextRand(0,100) < errorRate){
+                            touchHeap();
+                        }
                     }
+                    
                 }
                 
                 if(isMyTurn() && !game.isEndOfGame() && !game.isWinHeapState()){
@@ -97,7 +108,7 @@ public class CPUPlayer extends Player{
                 }
             }
         });
-        CPUBrain.start();
+        //CPUBrain.start();
     }
     
     private void adjustStatsIfOutOfBounds(){
@@ -143,6 +154,10 @@ public class CPUPlayer extends Player{
         super(p);
         setStats(reflexesRate, speedRate, errorRate);
         initializeBrain();
+    }
+    
+    public void startBrain(){
+        CPUBrain.start();
     }
 
     public int getErrorRate() {

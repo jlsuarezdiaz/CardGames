@@ -194,7 +194,7 @@ public class Player {
     }
     
     public boolean touchHeap(){
-        if(game.touchHeap()){
+        if(game.touchHeap(this)){
             if(isSandwich()) initSandwichFlag();
             if(isSameValue()) initSameValueFlag();
             takeHeap(game.takeHeap());

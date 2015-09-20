@@ -100,6 +100,15 @@ public class SotaCabrona {
         
     }
     
+    public void startGame(){
+        for(Player p : players){
+            if(p instanceof CPUPlayer){
+                ((CPUPlayer)p).startBrain();
+            }
+                
+        }
+    }
+    
     public void setCPUPlayers(ArrayList<Player> players, int reflexesRate, int speedRate, int errorRate){
         for(int i = 0; i < this.players.size(); i++){
             if(players.contains(this.players.get(i))){
@@ -138,12 +147,19 @@ public class SotaCabrona {
         else return (cardHeap.get(size-1).isValue(cardHeap.get(size-2).getValue()));
     }
     
-    public boolean touchHeap(){
+    private void setNextPlayer(Player p){
+        currentPlayer = p;
+        currentPlayerIndex = players.indexOf(p);
+    }
+    
+    public boolean touchHeap(Player p){
         if(!playing) return false;
         
         if(isSandwich() || isSameValue()){
             stop();
             remainingCardsCount = -1;
+            winHeapState = false;
+            setNextPlayer(p);
             return true;
         }
         else return false;
@@ -222,6 +238,7 @@ public class SotaCabrona {
     }
     
     public void winHeap(){
+        setNextPlayer(heapPlayer);
         heapPlayer.takeHeap(takeHeap());
         heapPlayer = null;
         winHeapState = false;
