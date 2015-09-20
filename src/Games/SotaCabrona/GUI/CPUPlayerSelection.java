@@ -5,6 +5,8 @@
  */
 package Games.SotaCabrona.GUI;
 
+import Games.SotaCabrona.Model.CPUPlayer;
+
 /**
  *
  * @author Juan Luis
@@ -16,7 +18,31 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
      */
     public CPUPlayerSelection() {
         initComponents();
+        this.speedSlider.setMinimum(CPUPlayer.getMinSpeedRate());
+        this.speedSlider.setMaximum(CPUPlayer.getMaxSpeedRate());
+        this.reflexSlider.setMinimum(CPUPlayer.getMinReflexesRate());
+        this.reflexSlider.setMaximum(CPUPlayer.getMaxReflexesRate());
+        this.errorSlider.setMinimum(CPUPlayer.getMinErrorRate());
+        this.errorSlider.setMaximum(CPUPlayer.getMaxErrorRate());
+        
+        this.speedSlider.setValue(CPUPlayer.getMaxSpeedRate()+CPUPlayer.getMinSpeedRate()-2000);
+        this.reflexSlider.setValue(CPUPlayer.getMaxReflexesRate()+CPUPlayer.getMinReflexesRate()-2000);
+        this.errorSlider.setValue(0);
     }
+    
+    public int getSpeed(){
+        return CPUPlayer.getMaxSpeedRate() + CPUPlayer.getMinSpeedRate() - speedSlider.getValue();
+    }
+    
+    public int getReflexes(){
+        return CPUPlayer.getMaxReflexesRate() + CPUPlayer.getMinReflexesRate() - reflexSlider.getValue();
+    }
+    
+    public int getError(){
+        return errorSlider.getValue();
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,9 +56,9 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jSlider1 = new javax.swing.JSlider();
-        jSlider2 = new javax.swing.JSlider();
-        jSlider3 = new javax.swing.JSlider();
+        speedSlider = new javax.swing.JSlider();
+        reflexSlider = new javax.swing.JSlider();
+        errorSlider = new javax.swing.JSlider();
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel2.setText("VELOCIDAD");
@@ -43,11 +69,11 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel4.setText("ERRORES");
 
-        jSlider1.setBackground(new java.awt.Color(0, 153, 255));
+        speedSlider.setBackground(new java.awt.Color(0, 153, 255));
 
-        jSlider2.setBackground(new java.awt.Color(51, 255, 102));
+        reflexSlider.setBackground(new java.awt.Color(51, 255, 102));
 
-        jSlider3.setBackground(new java.awt.Color(255, 0, 0));
+        errorSlider.setBackground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,15 +85,15 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(reflexSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(errorSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,16 +101,16 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(reflexSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -93,11 +119,11 @@ public class CPUPlayerSelection extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSlider errorSlider;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
-    private javax.swing.JSlider jSlider3;
+    private javax.swing.JSlider reflexSlider;
+    private javax.swing.JSlider speedSlider;
     // End of variables declaration//GEN-END:variables
 }

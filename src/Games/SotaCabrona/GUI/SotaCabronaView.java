@@ -8,18 +8,23 @@ package Games.SotaCabrona.GUI;
 
 import GUI.FrenchCardBack;
 import GUI.NarratorView;
+import Games.SotaCabrona.Model.Player;
 import Games.SotaCabrona.Model.SotaCabrona;
 import Model.Card;
 import Model.FrenchCard;
 import Model.FrenchSuit;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -47,9 +52,10 @@ public class SotaCabronaView extends javax.swing.JFrame {
     
     private SotaCabronaView thisView;
     
-    private boolean lightListenerAdded;
+    private boolean filled;
     
     private void fillRivalPanel(){
+        filled = true;
         rivalPanel.removeAll();
         int startIndex = sotaCabronaModel.getPlayers().indexOf(sotaCabronaModel.getMyPlayer());
 
@@ -68,6 +74,10 @@ public class SotaCabronaView extends javax.swing.JFrame {
             }
         }
         addLightListeners();
+        
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {}
     }
     
     private void updateRivalPanel(){
@@ -101,26 +111,31 @@ public class SotaCabronaView extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 setSotaCabrona(sotaCabronaModel);
-                if(sotaCabronaModel.isWinHeapState()){
-                    heapWinCount+= timerTick;
-                    if(heapWinCount >= heapWinWait){
-                        //narratorTxt.setText(narratorTxt.getText() + "\n" + sotaCabronaModel.getHeapPlayer().getName() + " se lleva el montón.");
-                        addToNarration(sotaCabronaModel.getHeapPlayer().getName() + " se lleva el montón.");
-                        heapWinCount = 0;
-                        sotaCabronaModel.winHeap();
+                if(sotaCabronaModel != null){
+                    if(sotaCabronaModel.isWinHeapState()){
+                        heapWinCount+= timerTick;
+                        if(heapWinCount >= heapWinWait){
+                            //narratorTxt.setText(narratorTxt.getText() + "\n" + sotaCabronaModel.getHeapPlayer().getName() + " se lleva el montón.");
+                            addToNarration(sotaCabronaModel.getHeapPlayer().getName() + " se lleva el montón.");
+                            heapWinCount = 0;
+                            sotaCabronaModel.winHeap();
+                        }
                     }
+                    else{
+                        heapWinCount = 0;
+                    }
+                    if(sotaCabronaModel.getWinner() != null){
+                        new NarratorView(thisView).showDialog("FIN", "FIN DE LA PARIDA", 
+                            sotaCabronaModel.getWinner().getName() + ", has ganado la partida. ¡ENHORABUENA!", "/Media/fireworks_icon.png");
+                        addToNarration(sotaCabronaModel.getWinner().getName() + " ha ganado la partida.");
+                        timerManager.stop();
+                    }
+
                 }
-                if(sotaCabronaModel.getWinner() != null){
-                    new NarratorView(thisView).showDialog("FIN", "FIN DE LA PARIDA", 
-                        sotaCabronaModel.getWinner().getName() + ", has ganado la partida. ¡ENHORABUENA!", "/Media/fireworks_icon.png");
-                    addToNarration(sotaCabronaModel.getWinner().getName() + " ha ganado la partida.");
-                    timerManager.stop();
-                }
-                
             }
         });
         
-        timerManager.start();
+        //timerManager.start();
         
         keyEvent = new KeyAdapter() {
             @Override
@@ -129,7 +144,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
             } 
         };
         heapWinCount = 0;
-        lightListenerAdded = false;
+        filled = false;
         narratorScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
     
@@ -137,7 +152,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
         if(s != null){
             this.sotaCabronaModel = s;
             
-            if(rivalPanel.getComponentCount() == 0)
+            if(!filled)
                 fillRivalPanel();
             else
                 updateRivalPanel();
@@ -166,35 +181,45 @@ public class SotaCabronaView extends javax.swing.JFrame {
         }
     }
     
+    public void showView(){
+        this.setVisible(true);
+        (new NarratorView(this)).showDialog("JUGAR", "Bienvenido a una nueva partida de sota cabrona.", "Pulsa el botón para empezar a jugar.", null);
+        timerManager.start();
+        sotaCabronaModel.startGame();
+    }
+    
     private void addLightListeners(){
-        if(!lightListenerAdded){
-            myPlayerView.addLightChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent pce) {
-                    if(myPlayerView.getDropLightColor() == Color.YELLOW)
-                        addToNarration("Turno de " + sotaCabronaModel.getCurrentPlayer().getName());
-                    if(myPlayerView.getDropLightColor() == Color.RED)
-                        addToNarration(myPlayerView.getPlayer().getName() + ", has soltado la carta fuera de tu turno. Pierdes 5 cartas.");
-                    if(myPlayerView.getDropLightColor() == Color.PINK)
-                        addToNarration(myPlayerView.getPlayer().getName() + ", has excedido el tiempo de soltar la carta. Pierdes 5 cartas.");
-                    if(myPlayerView.getTouchLightColor() == Color.BLUE)
-                        addToNarration(myPlayerView.getPlayer().getName() + ", ¡has tocado el montón con dos cartas del mismo valor! Te llevas el montón.");
-                    if(myPlayerView.getTouchLightColor() == Color.GREEN)
-                        addToNarration(myPlayerView.getPlayer().getName() + ", ¡has tocado el montón cuando hay un sandwich! Te llevas el montón.");
-                    if(myPlayerView.getTouchLightColor() == Color.RED)
-                        addToNarration(myPlayerView.getPlayer().getName() + ", has tocado el montón cuando y no hay nada. Pierdes 5 cartas.");
+        myPlayerView.addLightChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if(myPlayerView.getDropLightColor() == Color.YELLOW){
+                    addToNarration("Turno de " + sotaCabronaModel.getCurrentPlayer().getName());
+                    scrollToPlayer(sotaCabronaModel.getCurrentPlayer());
                 }
-            });
-            lightListenerAdded = true;
-        }
+                if(myPlayerView.getDropLightColor() == Color.RED)
+                    addToNarration(myPlayerView.getPlayer().getName() + ", has soltado la carta fuera de tu turno. Pierdes 5 cartas.");
+                if(myPlayerView.getDropLightColor() == Color.PINK)
+                    addToNarration(myPlayerView.getPlayer().getName() + ", has excedido el tiempo de soltar la carta. Pierdes 5 cartas.");
+                if(myPlayerView.getTouchLightColor() == Color.BLUE)
+                    addToNarration(myPlayerView.getPlayer().getName() + ", ¡has tocado el montón con dos cartas del mismo valor! Te llevas el montón.");
+                if(myPlayerView.getTouchLightColor() == Color.GREEN)
+                    addToNarration(myPlayerView.getPlayer().getName() + ", ¡has tocado el montón cuando hay un sandwich! Te llevas el montón.");
+                if(myPlayerView.getTouchLightColor() == Color.RED)
+                    addToNarration(myPlayerView.getPlayer().getName() + ", has tocado el montón cuando y no hay nada. Pierdes 5 cartas.");
+            }
+        });
+        
         
         for(Component c : rivalPanel.getComponents()){
             PlayerView pv = (PlayerView)c;
             pv.addLightChangeListener(new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent pce) {
-                    if(pv.getDropLightColor() == Color.YELLOW)
+                    scrollToPlayer(pv.getPlayer());
+                    if(pv.getDropLightColor() == Color.YELLOW){
                         addToNarration("Turno de " + sotaCabronaModel.getCurrentPlayer().getName());
+                        scrollToPlayer(sotaCabronaModel.getCurrentPlayer());
+                    }
                     if(pv.getDropLightColor() == Color.RED)
                         addToNarration(pv.getPlayer().getName() + ", has soltado la carta fuera de tu turno. Pierdes 5 cartas.");
                     if(pv.getDropLightColor() == Color.PINK)
@@ -227,6 +252,20 @@ public class SotaCabronaView extends javax.swing.JFrame {
         //System.out.println(i);
     }
     
+    private void scrollToPlayer(Player p){
+        if(p != sotaCabronaModel.getMyPlayer()){
+            int myPlayerIndex = sotaCabronaModel.getPlayers().indexOf(sotaCabronaModel.getMyPlayer());
+            int pIndex = sotaCabronaModel.getPlayers().indexOf(p);
+            rivalScrollPane.getHorizontalScrollBar().setValue(rivalPanel.getComponent(0).getWidth() *
+                    (pIndex-((pIndex < myPlayerIndex ||
+                            myPlayerIndex == -1)?0:1)));
+            rivalScrollPane.repaint();
+            rivalScrollPane.revalidate();
+            this.repaint();
+            this.revalidate();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -238,15 +277,17 @@ public class SotaCabronaView extends javax.swing.JFrame {
 
         lastHeapView = new GUI.CardView();
         myPlayerView = new Games.SotaCabrona.GUI.PlayerView();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        rivalScrollPane = new javax.swing.JScrollPane();
         rivalPanel = new javax.swing.JPanel();
         narratorScroll = new javax.swing.JScrollPane();
         narratorTxt = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sota Cabrona");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/program_icon.png")));
         setResizable(false);
 
-        jScrollPane1.setViewportView(rivalPanel);
+        rivalScrollPane.setViewportView(rivalPanel);
 
         narratorTxt.setEditable(false);
         narratorTxt.setColumns(20);
@@ -262,7 +303,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(rivalScrollPane)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(narratorScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +321,7 @@ public class SotaCabronaView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rivalScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -298,13 +339,13 @@ public class SotaCabronaView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    //public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+    /*    try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -320,10 +361,10 @@ public class SotaCabronaView extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SotaCabronaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold>*/
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    /*    java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 SotaCabronaView sv = new SotaCabronaView();
                 sv.setVisible(true);
@@ -335,14 +376,14 @@ public class SotaCabronaView extends javax.swing.JFrame {
                 
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private GUI.CardView lastHeapView;
     private Games.SotaCabrona.GUI.PlayerView myPlayerView;
     private javax.swing.JScrollPane narratorScroll;
     private javax.swing.JTextArea narratorTxt;
     private javax.swing.JPanel rivalPanel;
+    private javax.swing.JScrollPane rivalScrollPane;
     // End of variables declaration//GEN-END:variables
 }
