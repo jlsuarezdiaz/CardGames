@@ -7,6 +7,8 @@ package cardgames;
 
 import Games.Poker.GUI.PokerIntro;
 import Games.Poker.GUI.PokerView;
+import Games.SotaCabrona.GUI.SotaCabronaIntro;
+import Games.SotaCabrona.GUI.SotaCabronaView;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,8 +45,10 @@ public class Main {
                 runGameSelection();
                 break; 
             case SOTA_CABRONA:
-                showNotImplementedMessage();
-                runGameSelection();
+                SotaCabronaView sotaView = new SotaCabronaView();
+                SotaCabronaIntro sotaIntro = new SotaCabronaIntro(sotaView, true);
+                sotaView.setSotaCabrona(sotaIntro.getSotaCabrona());
+                sotaView.showView();
                 break;
             case HEARTS:
                 showNotImplementedMessage();
