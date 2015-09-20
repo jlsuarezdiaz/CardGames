@@ -63,6 +63,7 @@ public class PokerIntro extends javax.swing.JDialog {
         nameTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Poker");
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/program_icon.png")));
         setResizable(false);

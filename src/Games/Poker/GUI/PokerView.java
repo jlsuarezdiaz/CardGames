@@ -402,6 +402,8 @@ public class PokerView extends javax.swing.JFrame {
         btContinue = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Poker");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/program_icon.png")));
         setResizable(false);
 
         myPlayerView.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
