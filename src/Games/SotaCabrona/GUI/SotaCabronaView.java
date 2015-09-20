@@ -125,8 +125,11 @@ public class SotaCabronaView extends javax.swing.JFrame {
                         heapWinCount = 0;
                     }
                     if(sotaCabronaModel.getWinner() != null){
-                        new NarratorView(thisView).showDialog("FIN", "FIN DE LA PARIDA", 
+                        new NarratorView(thisView).showDialog("FIN", "FIN DE LA PARTIDA", 
                             sotaCabronaModel.getWinner().getName() + ", has ganado la partida. ¡ENHORABUENA!", "/Media/fireworks_icon.png");
+                        setSotaCabrona(sotaCabronaModel);
+                        repaint();
+                        revalidate();
                         addToNarration(sotaCabronaModel.getWinner().getName() + " ha ganado la partida.");
                         timerManager.stop();
                     }
