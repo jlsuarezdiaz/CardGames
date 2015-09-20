@@ -90,11 +90,11 @@ public class Player {
         }
     }
     
-    private void initSandwichFlag(){
+    void initSandwichFlag(){
         sandwichFlag = true;
         sandwichFlagCount = 0;
     }
-    private void initSameValueFlag(){
+    void initSameValueFlag(){
         sameValueFlag = true;
         sameValueFlagCount = 0;
     }
@@ -195,9 +195,9 @@ public class Player {
     
     public boolean touchHeap(){
         if(game.touchHeap(this)){
-            if(isSandwich()) initSandwichFlag();
-            if(isSameValue()) initSameValueFlag();
-            takeHeap(game.takeHeap());
+            //if(isSandwich()) initSandwichFlag();
+            //if(isSameValue()) initSameValueFlag();
+            //takeHeap(game.takeHeap());
             return true;
         }
         else{

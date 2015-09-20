@@ -148,6 +148,9 @@ public class SotaCabrona {
     }
     
     private void setNextPlayer(Player p){
+        if(isEndOfGame()){
+            stop();
+        }
         currentPlayer = p;
         currentPlayerIndex = players.indexOf(p);
     }
@@ -159,6 +162,11 @@ public class SotaCabrona {
             stop();
             remainingCardsCount = -1;
             winHeapState = false;
+            ////
+            if(isSandwich()) p.initSandwichFlag();
+            if(isSameValue()) p.initSameValueFlag();
+            p.takeHeap(takeHeap());
+            ////
             setNextPlayer(p);
             return true;
         }
@@ -238,8 +246,8 @@ public class SotaCabrona {
     }
     
     public void winHeap(){
-        setNextPlayer(heapPlayer);
         heapPlayer.takeHeap(takeHeap());
+        setNextPlayer(heapPlayer);
         heapPlayer = null;
         winHeapState = false;
         stop();
