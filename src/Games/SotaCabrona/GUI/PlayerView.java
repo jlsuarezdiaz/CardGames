@@ -105,7 +105,6 @@ public class PlayerView extends javax.swing.JPanel {
             }
             if(rev == 0){
                 this.setBackground(Color.DARK_GRAY);
-                this.setEnabled(false);
             }
         }
         else{
