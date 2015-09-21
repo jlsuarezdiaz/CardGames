@@ -42,6 +42,9 @@ public class Player {
     private int dropFlagCount;
     private int timeOutFlagCount;
     
+    private int reviveOpportunities;
+    private static final int reviveOpStart = 5;
+    
     private void initFlags(){
         sandwichFlag = false;
         sameValueFlag = false;
@@ -157,6 +160,7 @@ public class Player {
         myCards = new ArrayList();
         this.name = name;
         this.game = new SotaEnvironment(game);
+        this.reviveOpportunities = 5;
         initTimer();
     }
     
@@ -164,6 +168,7 @@ public class Player {
         this.myCards = p.myCards;
         this.name = p.name;
         this.game = p.game;
+        this.reviveOpportunities = p.reviveOpStart;
         initTimer();
     }
     
@@ -194,6 +199,8 @@ public class Player {
     }
     
     public boolean touchHeap(){
+        if(myCards.size() == 0 && reviveOpportunities == 0) return false;
+        if(myCards.size() == 0 && game.isPlaying()) reviveOpportunities--;
         if(game.touchHeap(this)){
             //if(isSandwich()) initSandwichFlag();
             //if(isSameValue()) initSameValueFlag();
@@ -261,6 +268,11 @@ public class Player {
     public boolean isTimeOutFlag() {
         return timeOutFlag;
     }
+
+    public int getReviveOpportunities() {
+        return reviveOpportunities;
+    }
+    
     
     
 }
