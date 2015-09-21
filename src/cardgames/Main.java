@@ -45,8 +45,9 @@ public class Main {
                 runGameSelection();
                 break; 
             case SOTA_CABRONA:
-                SotaCabronaView sotaView = new SotaCabronaView();
+                SotaCabronaView sotaView = null;//new SotaCabronaView();
                 SotaCabronaIntro sotaIntro = new SotaCabronaIntro(sotaView, true);
+                sotaView = new SotaCabronaView();
                 sotaView.setSotaCabrona(sotaIntro.getSotaCabrona());
                 sotaView.showView();
                 break;
