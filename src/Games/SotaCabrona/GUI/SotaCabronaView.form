@@ -56,17 +56,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="rivalScrollPane" min="-2" pref="180" max="-2" attributes="0"/>
+              <Component id="rivalScrollPane" pref="210" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="lastHeapView" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="myPlayerView" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="narratorScroll" max="32767" attributes="0"/>
+                  <Component id="narratorScroll" min="-2" pref="290" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -13,8 +13,10 @@ import Model.FrenchSuit;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -30,6 +32,7 @@ public class PlayerView extends javax.swing.JPanel {
     private String dropAddress;
     private String touchAddress;
     
+    private ArrayList<JLabel> lifeLabs;
     /**
      * Creates new form PlayerView
      */
@@ -43,6 +46,13 @@ public class PlayerView extends javax.swing.JPanel {
         timeBar.setForeground(Color.RED);
         cardSizeBar.setMaximum(52);
         dropAddress = touchAddress = null;
+        
+        lifeLabs = new ArrayList();
+        lifeLabs.add(lifeLab1);
+        lifeLabs.add(lifeLab2);
+        lifeLabs.add(lifeLab3);
+        lifeLabs.add(lifeLab4);
+        lifeLabs.add(lifeLab5);
     }
 
     public void setPlayer(Player p){
@@ -82,6 +92,25 @@ public class PlayerView extends javax.swing.JPanel {
         if(touchAddress == null || !touchAddress.equals(newTouchAddress)){
             touchAddress = newTouchAddress;
             touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource(touchAddress)));
+        }
+        
+        if(p.getMyCards().size() == 0){
+            int rev = p.getReviveOpportunities();
+            for(int i = 0; i < lifeLabs.size(); i++){
+                lifeLabs.get(i).setVisible(true);
+                if(i < rev)
+                    lifeLabs.get(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/blue_light_xs.png")));
+                else
+                    lifeLabs.get(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png")));
+            }
+            if(rev == 0){
+                this.setBackground(Color.DARK_GRAY);
+                this.setEnabled(false);
+            }
+        }
+        else{
+            for(int i = 0; i < lifeLabs.size(); i++)
+                lifeLabs.get(i).setVisible(false);
         }
         
         this.repaint();
@@ -143,6 +172,11 @@ public class PlayerView extends javax.swing.JPanel {
         cardSizeText = new javax.swing.JTextField();
         dropLab = new javax.swing.JLabel();
         touchLab = new javax.swing.JLabel();
+        lifeLab1 = new javax.swing.JLabel();
+        lifeLab2 = new javax.swing.JLabel();
+        lifeLab3 = new javax.swing.JLabel();
+        lifeLab4 = new javax.swing.JLabel();
+        lifeLab5 = new javax.swing.JLabel();
 
         nameLab.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         nameLab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -163,46 +197,75 @@ public class PlayerView extends javax.swing.JPanel {
 
         touchLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
 
+        lifeLab1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
+        lifeLab2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
+        lifeLab3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
+        lifeLab4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
+        lifeLab5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/transparent_light_xs.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nameLab, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cardView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cardSizeText, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cardSizeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(dropLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(touchLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dropLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(touchLab, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cardSizeText, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cardSizeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lifeLab1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lifeLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lifeLab3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lifeLab4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lifeLab5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(nameLab, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cardView, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dropLab, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(touchLab, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(cardSizeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(cardSizeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(timeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lifeLab1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lifeLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lifeLab3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lifeLab4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lifeLab5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cardView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -232,6 +295,11 @@ public class PlayerView extends javax.swing.JPanel {
     private javax.swing.JTextField cardSizeText;
     private GUI.CardView cardView;
     private javax.swing.JLabel dropLab;
+    private javax.swing.JLabel lifeLab1;
+    private javax.swing.JLabel lifeLab2;
+    private javax.swing.JLabel lifeLab3;
+    private javax.swing.JLabel lifeLab4;
+    private javax.swing.JLabel lifeLab5;
     private javax.swing.JLabel nameLab;
     private javax.swing.JProgressBar timeBar;
     private javax.swing.JLabel touchLab;
