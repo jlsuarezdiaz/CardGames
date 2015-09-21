@@ -192,8 +192,10 @@ public class Player {
             }
         }
         else{
-            punish();
-            initErrorDropFlag();
+            if(game.isPlaying()){
+                punish();
+                initErrorDropFlag();
+            }
         }
         timerCount = 0;
     }

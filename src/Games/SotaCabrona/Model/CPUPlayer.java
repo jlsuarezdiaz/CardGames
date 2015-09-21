@@ -106,6 +106,7 @@ public class CPUPlayer extends Player{
                         speedGoal = -1;
                     }
                 }
+                else speedGoal = -1;
             }
         });
         //CPUBrain.start();

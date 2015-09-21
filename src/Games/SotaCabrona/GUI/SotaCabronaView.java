@@ -223,16 +223,20 @@ public class SotaCabronaView extends javax.swing.JFrame {
                         addToNarration("Turno de " + sotaCabronaModel.getCurrentPlayer().getName());
                         scrollToPlayer(sotaCabronaModel.getCurrentPlayer());
                     }
-                    if(pv.getDropLightColor() == Color.RED)
+                    if(pv.getDropLightColor() == Color.RED){
                         addToNarration(pv.getPlayer().getName() + ", has soltado la carta fuera de tu turno. Pierdes 5 cartas.");
+                        scrollToPlayer(sotaCabronaModel.getCurrentPlayer());
+                    }
                     if(pv.getDropLightColor() == Color.PINK)
                         addToNarration(pv.getPlayer().getName() + ", has excedido el tiempo de soltar la carta. Pierdes 5 cartas.");
                     if(pv.getTouchLightColor() == Color.BLUE)
                         addToNarration(pv.getPlayer().getName() + ", ¡has tocado el montón con dos cartas del mismo valor! Te llevas el montón.");
                     if(pv.getTouchLightColor() == Color.GREEN)
                         addToNarration(pv.getPlayer().getName() + ", ¡has tocado el montón cuando hay un sandwich! Te llevas el montón.");
-                    if(pv.getTouchLightColor() == Color.RED)
+                    if(pv.getTouchLightColor() == Color.RED){
                         addToNarration(pv.getPlayer().getName() + ", has tocado el montón cuando y no hay nada. Pierdes 5 cartas.");
+                        scrollToPlayer(sotaCabronaModel.getCurrentPlayer());
+                    }
                 }
             });
         }
