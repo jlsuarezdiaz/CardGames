@@ -5,10 +5,16 @@
  */
 package Games.Uno.Model;
 
+import Model.UnoCard;
+import java.util.ArrayList;
+import Model.UnoSuit;
+
 /**
  *
  * @author Javier
  */
+
 public class Uno {
-    
+    private ArrayList<UnoCard> heap;
+    private ArrayList<String> players;
 }

@@ -14,10 +14,12 @@ import java.util.Collections;
  */
 public class UnoDeck extends CardDeck {
     private ArrayList <UnoCard> cards;
+    private ArrayList <UnoCard> junk;
     
     @Override
     protected void initCards(){
         cards = new ArrayList<>();
+        junk = new ArrayList<>();
         String[] values = {"PLUS2","1","2","3","4","5","6","7","8","9","CHANGEDIRECTION","JUMP"};
         UnoSuit[] ordinarySuits = {UnoSuit.RED, UnoSuit.GREEN, UnoSuit.YELLOW, UnoSuit.BLUE};
         
@@ -50,12 +52,19 @@ public class UnoDeck extends CardDeck {
 
     @Override
     public UnoCard nextCard() {
-        return (cards.isEmpty())?null:cards.remove(0);
+        if (cards.isEmpty()){
+            ArrayList<UnoCard> aux = new ArrayList<>(junk);
+            junk = cards;
+            cards = aux;
+            shuffle();
+        }
+        
+        return cards.remove(0);
     }
 
     @Override
     public void giveCardBack(Card card) {
-        cards.add((UnoCard)card);
+        junk.add((UnoCard)card);
     }
 
     @Override
