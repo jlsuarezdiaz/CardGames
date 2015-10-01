@@ -6,11 +6,9 @@
 package GUI;
 
 import Model.Card;
-import com.sun.corba.se.spi.oa.OADefault;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 

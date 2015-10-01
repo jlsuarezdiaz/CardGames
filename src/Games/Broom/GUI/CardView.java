@@ -5,7 +5,6 @@
  */
 package Games.Broom.GUI;
 import Games.Broom.Model.Card;
-import javafx.scene.paint.Color;
 
 /**
  *
