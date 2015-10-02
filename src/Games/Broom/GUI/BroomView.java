@@ -5,9 +5,15 @@
  */
 package Games.Broom.GUI;
 
+import GUI.CardView;
+import GUI.SpanishCardBack;
 import Games.Broom.Model.Broom;
 import Games.Broom.Model.Player;
+import Games.Poker.Model.CPUPlayer;
+import Model.SpanishCard;
+import java.awt.Component;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  *
@@ -23,178 +29,24 @@ public class BroomView extends javax.swing.JFrame {
     public void setBroom(Broom escobaModel){
         this.escobaModel = escobaModel;
         player1.setPlayer(escobaModel.getMyPlayer());
-        
-        if (CPU1.getCards().getComponentCount() == 0){
-            //relleno el panel.
-        }
-        else{
-            //actualizo.
-        }
-        
-        //CPU1.setPlayer();
+        CPU1.setPlayer(escobaModel.getPlayers().get(1));
+        CPU2.setPlayer(escobaModel.getPlayers().get(2));       
         
         
-        /*
-        currentPlayer.setBroom(escobaModel);        
+        currentPlayer = escobaModel.getCurrentPlayer();        
         fillCardPanel(table,escobaModel.getTableCards());
-        
-        ArrayList<Integer> punt = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
-        
-        for (Player p:escobaModel.getPlayers()){
-            punt.add(p.getTotalPoints());
-            names.add(p.getName());
-        }
-        
-        fillScorePanel(scores,punt,names);
-        
-        
-        set.setEnabled(true);
+
         play.setEnabled(true);
-        nextTurn.setEnabled(false);
-        currentPlayer.setVisible(true);*/
         repaint();
         revalidate();
-    }
-    /*
-    private void nextTurnActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        boolean next = escobaModel.nextTurn();
-        
-        if (
+    }   
     
-    
-    
-    
-        if (!next){ //ha habido reparto nuevo.
-            escobaModel.resetGame();
-            
-            boolean endOfGame = escobaModel.endOfGame();
-            setRondas();
-           
-            if (endOfGame){
-                ArrayList<Player> winners = escobaModel.tellTheWinner();
-                String cadena;
-               
-                if (winners.size() == 1)
-                    cadena = "Winner -->";
-                else
-                    cadena = "Winners -->";
-                    
-                for (Player p: winners){
-                    cadena += (p.getName() + " ");
-                }
-                
-                mensaje.setText(cadena);
-            }
-        }
-        
-        setBroom(escobaModel);
-        
-        set.setEnabled(true);
-        play.setEnabled(true);
-        nextTurn.setEnabled(false);
-        showCards.setEnabled(true);
-        
-        repaint();
-        revalidate();
-    }                                        
-
-    private void setActionPerformed(java.awt.event.ActionEvent evt) {                                    
-        ArrayList<Card> s = currentPlayer.getSelectedCard(currentPlayer.getCards());
-        escobaModel.getTableCards().add(s.get(0));
-        currentPlayer.getPlayer().discardCard(s.get(0));
-        
-        setBroom(escobaModel);
-        
-        set.setEnabled(false);
-        play.setEnabled(false);
-        nextTurn.setEnabled(false);
-        
-        repaint();
-        revalidate();
-    }                                   
-
-    private void playActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        ArrayList<Card> selected = getSelectedTableCards(table);        
-        ArrayList<Card> s = currentPlayer.getSelectedCard(currentPlayer.getCards());
-            
-        boolean goodmove = escobaModel.goodMove(s.get(0),selected);
-        
-        currentPlayer.getPlayer().discardCard(s.get(0));
-            
-        if (!goodmove){
-            escobaModel.getTableCards().add(s.get(0));
-        }
-        else{
-            if (selected.size() == escobaModel.getTableCards().size()){
-                currentPlayer.getPlayer().setScore(1);
-                    
-                for (Card c:selected){
-                    currentPlayer.getPlayer().addCardHeap(c);
-                    escobaModel.discardTableCard(c);
-                }
-                
-                currentPlayer.getPlayer().addCardHeap(s.get(0));
-            }
-            else{
-                for (Card c:selected){
-                    currentPlayer.getPlayer().addCardHeap(c);
-                    escobaModel.discardTableCard(c);
-                }
-                
-                currentPlayer.getPlayer().addCardHeap(s.get(0));
-           }
-        }
-        
-        
-        setBroom(escobaModel);
-        
-        set.setEnabled(false);
-        play.setEnabled(false);
-        nextTurn.setEnabled(false);
-        
-        
-        repaint();
-        revalidate();
-    }                                    
-
-    private void showCardsActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        if(currentPlayer.isVisible())
-            currentPlayer.setVisible(false);
-        else
-            currentPlayer.setVisible(true);
-        
-        nextTurn.setEnabled(true);
-        showCards.setEnabled(false);
-        repaint();
-        revalidate();
-        
-    }                                         
-
-    public void showView() {
-        this.setVisible(true);
-    }
-    
-    public void fillScorePanel (JPanel aPanel,ArrayList <Integer> aList,ArrayList<String> names){
+    private void fillCardPanel(JPanel aPanel,ArrayList <SpanishCard> aList){
         aPanel.removeAll();
         
-        for(int i = 0; i < names.size(); i++){
-            ScoreView aView = new ScoreView();
-            aView.setScore(aList.get(i),names.get(i));
-            aView.setVisible(true);
-            aPanel.add(aView);
-        }
-        
-        aPanel.repaint();
-        aPanel.revalidate();
-    }
-    
-    public void fillCardPanel (JPanel aPanel,ArrayList <Card> aList){
-        aPanel.removeAll();
-        
-        for(Card t: aList){
+        for(SpanishCard t: aList){
             CardView aCardView = new CardView();
-            aCardView.setCard(t);
+            aCardView.setCard(t,SpanishCardBack.RED);
             aCardView.setVisible(true);
             aPanel.add(aCardView);
         }
@@ -202,22 +54,10 @@ public class BroomView extends javax.swing.JFrame {
         aPanel.repaint();
         aPanel.revalidate();
     }
-    
-    
-    public ArrayList<Card> getSelectedTableCards(JPanel aPanel){
-        CardView tv;
-        ArrayList<Card> output = new ArrayList<>();
-        
-        for (Component c: aPanel.getComponents()){
-            tv = (CardView)c;
-            
-            if (tv.isSelected())
-                output.add(tv.getCard());
-        }
-        
-        return output;
+
+    public void showView() {
+        this.setVisible(true);
     }
-*/
     /**
      * Creates new form BroomView
      */
@@ -238,11 +78,19 @@ public class BroomView extends javax.swing.JFrame {
         player1 = new Games.Broom.GUI.PlayerView();
         CPU1 = new Games.Broom.GUI.CPUPlayerView();
         CPU2 = new Games.Broom.GUI.CPUPlayerView();
+        play = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         table.setBorder(javax.swing.BorderFactory.createTitledBorder("Mesa"));
         table.setLayout(new java.awt.GridBagLayout());
+
+        play.setText("Jugar");
+        play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -260,7 +108,9 @@ public class BroomView extends javax.swing.JFrame {
                         .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(306, 306, 306)
+                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 310, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -274,11 +124,78 @@ public class BroomView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    private ArrayList<SpanishCard> getSelectedTableCards(JPanel aPanel){
+        CardView tv;
+        ArrayList<SpanishCard> output = new ArrayList<>();
+        
+        for (Component c: aPanel.getComponents()){
+            tv = (CardView)c;
+            
+            if (tv.isSelected())
+                output.add((SpanishCard)tv.getCard());
+        }
+        
+        return output;
+    }
+    
+    
+    private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
+        if (escobaModel.getCurrentPlayer() != escobaModel.getMyPlayer()){
+            escobaModel.goodMove(null,null);
+        }
+        else{
+        
+            ArrayList<SpanishCard> selected = getSelectedTableCards(table);        
+            ArrayList<SpanishCard> s = player1.getSelectedCard(player1.getCards());
+
+            boolean goodmove = escobaModel.goodMove(s.get(0),selected);
+
+            player1.getPlayer().discardCard(s.get(0));
+
+            if (!goodmove){
+                escobaModel.getTableCards().add(s.get(0));
+            }
+            else{
+                if (selected.size() == escobaModel.getTableCards().size()){
+                    player1.getPlayer().setScore(1);
+
+                    for (SpanishCard c:selected){
+                        player1.getPlayer().addCardHeap(c);
+                        escobaModel.discardTableCard(c);
+                    }
+
+                    player1.getPlayer().addCardHeap(s.get(0));
+                }
+                else{
+                    for (SpanishCard c:selected){
+                        player1.getPlayer().addCardHeap(c);
+                        escobaModel.discardTableCard(c);
+                    }
+
+                    player1.getPlayer().addCardHeap(s.get(0));
+               }
+            }
+
+            //escobaModel.nextTurn(escobaModel.getCards());
+
+            setBroom(escobaModel);
+            play.setEnabled(false);
+        }
+        
+        repaint();
+        revalidate();
+    }//GEN-LAST:event_playActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +235,7 @@ public class BroomView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Games.Broom.GUI.CPUPlayerView CPU1;
     private Games.Broom.GUI.CPUPlayerView CPU2;
+    private javax.swing.JButton play;
     private Games.Broom.GUI.PlayerView player1;
     private javax.swing.JPanel table;
     // End of variables declaration//GEN-END:variables

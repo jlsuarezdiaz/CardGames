@@ -22,7 +22,7 @@ public class Broom {
     private ArrayList<SpanishCard> cards;
     private int currentServerPlayerIndex;
     private int lastPlayer; //ultimo jugador que cogio.
-    
+    private SpanishDeck deck;
     
     public Broom(){
         currentPlayerIndex = -1;
@@ -110,10 +110,11 @@ public class Broom {
     
    
     private SpanishDeck initCardsTable(){
-        SpanishDeck deck = new SpanishDeck();
-        deck.remove8And9s();
-        deck.shuffle();
-            
+        SpanishDeck deck1 = new SpanishDeck();
+        deck1.remove8And9s();
+        deck1.shuffle();
+        this.deck = deck1;  
+        
         for (int i = 0; i < 4; i++)
             cards.add(deck.nextCard());
         
