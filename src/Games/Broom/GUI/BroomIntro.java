@@ -40,6 +40,7 @@ public class BroomIntro extends javax.swing.JDialog {
         nameText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         btPlay.setBackground(new java.awt.Color(0, 204, 102));
         btPlay.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -85,6 +86,7 @@ public class BroomIntro extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPlayActionPerformed
