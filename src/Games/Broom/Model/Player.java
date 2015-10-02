@@ -6,6 +6,7 @@
 package Games.Broom.Model;
 
 import java.util.ArrayList;
+import Model.*;
 
 /**
  *
@@ -14,18 +15,20 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int total_points;
-    private ArrayList<Card> cards;
-    private ArrayList<Card> heap;
+    protected ArrayList<SpanishCard> cards;
+    private ArrayList<SpanishCard> heap;
+    private int brooms;
     
     public Player(String name){
         this.name = name;
         total_points = 0;
+        brooms = 0;
         cards = new ArrayList<>();
         heap = new ArrayList<>();
     }
 
     
-    public void play(int eleccion, Card carta,ArrayList<Card> tabla){
+    public void play(int eleccion,SpanishCard carta,ArrayList<SpanishCard> tabla){
         if (eleccion == 0){ ///Jugamos a mover.
             goodMove(carta,tabla);
         }
@@ -34,25 +37,28 @@ public class Player {
         }
     }
     
-    public boolean goodMove(Card c,ArrayList<Card> table){
-        boolean good = false;        
+    public boolean goodMove(SpanishCard c,ArrayList<SpanishCard> table){
+        boolean good;        
         int sum = 0;
         
-        for (Card card: table){
-            sum += card.getValue();
+        for (SpanishCard card: table){
+            
+            sum += Integer.valueOf(card.getValue()) >= 10 ? Integer.valueOf(card.getValue())-2 : Integer.valueOf(card.getValue());
         }
         
-        sum += c.getValue();
-        
-        if (sum == 15)
+        sum += Integer.valueOf(c.getValue()) >= 10 ? Integer.valueOf(c.getValue())-2 : Integer.valueOf(c.getValue());
+      
+        if (sum == 15){
             good = true;
+            brooms++;
+        }
         else
             good = false;
         
         return good;
     }
     
-    public void setNewCard(Card c,ArrayList<Card> table){
+    public void setNewCard(SpanishCard c,ArrayList<SpanishCard> table){
         table.add(c);
     }
     
@@ -65,11 +71,12 @@ public class Player {
         return new Prize(numberCards,numberOros,numberSevens,found);
     }
     
+    //Recuento de las cartas del jugador.
     private int calcNumberSevens(){
         int number = 0;
         
-        for (Card c: heap){
-            if (c.getValue() == 7){
+        for (SpanishCard c: heap){
+            if (Integer.valueOf(c.getValue()) == 7){
                 number = number + 1; 
             }
         }
@@ -80,8 +87,8 @@ public class Player {
     private int calcNumberOros(){
         int number = 0;
         
-        for (Card c: heap){
-            if (c.getType() == CardType.OROS){
+        for (SpanishCard c: heap){
+            if (c.getSuit() == SpanishSuit.COINS){
                 number = number + 1; 
             }
         }
@@ -93,7 +100,7 @@ public class Player {
         boolean found = false;
         
         for(Card c: heap){
-            if (c.getType() == CardType.OROS && c.getValue() == 7){
+            if (c.getSuit() == SpanishSuit.COINS && Integer.valueOf(c.getValue()) == 7){
                 found = true;
             }
         }
@@ -112,21 +119,25 @@ public class Player {
     public int getTotalPoints() {
         return total_points;
     }
+    
+    public int getBrooms(){
+        return brooms;
+    }
 
     @SuppressWarnings("unchecked")
-    public ArrayList<Card> getCards() {
-        return (ArrayList<Card>)cards.clone();
+    public ArrayList<SpanishCard> getCards() {
+        return (ArrayList<SpanishCard>)cards.clone();
     }
     
-    public void addCard(Card c){
+    public void addCard(SpanishCard c){
         cards.add(c);
     }
     
-    public void addCardHeap(Card c){
+    public void addCardHeap(SpanishCard c){
         heap.add(c);
     }
     
-    public void discardCard(Card c){
+    public void discardCard(SpanishCard c){
         cards.remove(c);
     }
     
@@ -134,7 +145,7 @@ public class Player {
         return cards.isEmpty();
     }
     
-    public ArrayList<Card> getHeap(){
+    public ArrayList<SpanishCard> getHeap(){
         return heap;
     }
     

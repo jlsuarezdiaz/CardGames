@@ -1,43 +1,41 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Author: Juan Luis Su�rez D�az
+ * September, 2015
+ * Card Games
  */
 package Games.Broom.GUI;
 
 import GUI.CardView;
 import GUI.SpanishCardBack;
-import Games.Broom.Model.*;
-import Model.*;
-import java.awt.Component;
+import Games.Broom.Model.Broom;
+import Games.Broom.Model.Player;
+import Model.SpanishCard;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+
 /**
  *
  * @author Javier
  */
-public class PlayerView extends javax.swing.JPanel {
+public class CPUPlayerView extends javax.swing.JPanel {
     private Player playerModel;
     private Broom escobaModel;
-    private SpanishCard taken_card;
-
-    public Player getPlayer() {
+       
+    public Player getPlayer(){
         return playerModel;
     }
 
-    public JPanel getCards() {
+    public JPanel getCards(){
         return cards;
-    }    
-
-    public SpanishCard getTakenCard() {
-        return taken_card;
-    }
+    }  
     
     public void setBroom(Broom escobaModel){
         this.escobaModel = escobaModel;
         repaint();
         revalidate();
     }
+        
+        
     public void setPlayer(Player p){
         playerModel = p;
         name.setText(playerModel.getName());
@@ -47,34 +45,12 @@ public class PlayerView extends javax.swing.JPanel {
         revalidate();
     }
     
-    public void setCard(SpanishCard c){
-        taken_card = c;
-        repaint();
-        revalidate();
-    }
-    
-    public ArrayList<SpanishCard> getSelectedCard(JPanel aPanel){
-        CardView tv;
-        ArrayList<SpanishCard> output = new ArrayList<>();
-        
-        for (Component c: aPanel.getComponents()){
-            tv = (CardView)c;
-            
-            if (tv.isSelected())
-                output.add((SpanishCard)tv.getCard());
-        }
-        
-        setCard(output.get(0));
-        
-        return output;
-    }
-    
     public void fillCardPanel (JPanel aPanel,ArrayList <SpanishCard> aList){
         aPanel.removeAll();
         
         for(SpanishCard t: aList){
             CardView aCardView = new CardView();
-            aCardView.setCard(t,SpanishCardBack.RED);
+            aCardView.setCard(t,SpanishCardBack.RED,true);
             aCardView.setVisible(true);
             aPanel.add(aCardView);
         }
@@ -84,9 +60,9 @@ public class PlayerView extends javax.swing.JPanel {
     }
     
     /**
-     * Creates new form PlayerView
+     * Creates new form CPUPlayer
      */
-    public PlayerView() {
+    public CPUPlayerView() {
         initComponents();
     }
 
@@ -124,7 +100,7 @@ public class PlayerView extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(name))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,9 +109,9 @@ public class PlayerView extends javax.swing.JPanel {
                 .addComponent(name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(score)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(cards, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

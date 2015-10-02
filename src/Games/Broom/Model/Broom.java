@@ -7,17 +7,19 @@ package Games.Broom.Model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import Model.*;
 
 /**
  *
  * @author Javier
  */
+
 public class Broom {
     private static Broom instance = new Broom();
     private int currentPlayerIndex;
     private ArrayList<Player> players;
     private Player currentPlayer;
-    private ArrayList<Card> cards;
+    private ArrayList<SpanishCard> cards;
     private int currentServerPlayerIndex;
     private int lastPlayer; //ultimo jugador que cogio.
     
@@ -29,6 +31,10 @@ public class Broom {
         currentPlayer = null;
         cards = new ArrayList<>();
         players = new ArrayList<>();
+    }
+    
+    public Broom(ArrayList<String> names){
+        initGame(names);
     }
     
     private void initPlayers(ArrayList<String> names){
@@ -65,13 +71,53 @@ public class Broom {
         else{
             currentServerPlayerIndex = currentPlayerIndex - 1;
         }
+    }    
+    
+    private boolean giveCardsToPlayers(SpanishDeck deck){
+        boolean state;
+         
+        ArrayList<SpanishCard> c = new ArrayList<>();
+      
+        if (!deck.isEmpty()){
+            state = true;
+            
+            for (int i = 0; i < 9; i++){
+                c.add(deck.nextCard());
+            }
+
+            int j = (currentServerPlayerIndex+1)%players.size();
+
+            while (!c.isEmpty()){
+                SpanishCard card = c.get(0);
+                players.get(j).addCard(card);
+                c.remove(card);
+
+                j = (j+1)%players.size();
+            }
+        }
+        else{
+            initCardsTable();
+            
+            currentServerPlayerIndex = currentPlayerIndex;
+            currentPlayerIndex = (currentServerPlayerIndex+1)%players.size();
+            currentPlayer = players.get(currentPlayerIndex);
+            
+            state = false;
+        }
+        
+        return state;
     }
     
-    private void initCardsTable(){
-        Dealer dealer = Dealer.getInstance();
-        
+   
+    private SpanishDeck initCardsTable(){
+        SpanishDeck deck = new SpanishDeck();
+        deck.remove8And9s();
+        deck.shuffle();
+            
         for (int i = 0; i < 4; i++)
-            cards.add(dealer.nextCard());
+            cards.add(deck.nextCard());
+        
+        return deck;
     
     }
     
@@ -80,19 +126,17 @@ public class Broom {
     }
     
     public void initGame(ArrayList<String> players){
-        Dealer dealer = Dealer.getInstance();
-        dealer.initCards();
         initPlayers(players);
-        initCardsTable();
-        nextTurn();
+        SpanishDeck deck = initCardsTable();
+        nextTurn(deck);
     }
     
     public void resetGame(){
-        ArrayList<Card> copia = new ArrayList<>(cards);
+        ArrayList<SpanishCard> copia = new ArrayList<>(cards);
         
         System.out.println(Integer.toString(lastPlayer));
         
-        for (Card c: copia){
+        for (SpanishCard c: copia){
             players.get(lastPlayer).addCard(c);
         }
         
@@ -106,13 +150,13 @@ public class Broom {
         }
     }
     
-    public boolean nextTurn(){        
+    public boolean nextTurn(SpanishDeck deck){        
         boolean state;
         
         if (nextDealAllowed()){    
             currentPlayer = nextPlayer();   
  
-            state = nextDeal();
+            state = giveCardsToPlayers(deck);
         }
         else{
             if (currentServerPlayerIndex == -1)
@@ -121,43 +165,6 @@ public class Broom {
             currentPlayer = nextPlayer();
 
             state = true;
-        }
-        
-        return state;
-    }
-    
-    private boolean nextDeal(){
-        boolean state;
-        
-        Dealer dealer = Dealer.getInstance();
-        
-        if (!dealer.getDeck().isEmpty()){
-            state = true;
-            
-            ArrayList<Card> c = new ArrayList<>();
-      
-            for (int i = 0; i < 9; i++){
-                c.add(dealer.nextCard());
-            }
-            
-            int j = (currentServerPlayerIndex+1)%players.size();
-            
-            while (!c.isEmpty()){
-                Card card = c.get(0);
-                players.get(j).addCard(card);
-                c.remove(card);
-                
-                j = (j+1)%players.size();
-            }
-        }
-        else{
-            dealer.initCards();
-            
-            currentServerPlayerIndex = currentPlayerIndex;
-            currentPlayerIndex = (currentServerPlayerIndex+1)%players.size();
-            currentPlayer = players.get(currentPlayerIndex);
-            
-            state = false;
         }
         
         return state;
@@ -173,6 +180,9 @@ public class Broom {
         return true;
     }
      
+    
+    
+    //////////////////////////
     public boolean endOfGame(){
         boolean winner = false;
         
@@ -209,9 +219,9 @@ public class Broom {
     }
     
     public void obtainPoints(){
-        ArrayList<Card> copia = new ArrayList<>(cards);
+        ArrayList<SpanishCard> copia = new ArrayList<>(cards);
                 
-        for (Card c: copia){
+        for (SpanishCard c: copia){
             players.get(lastPlayer).addCard(c);
         }
         
@@ -357,15 +367,15 @@ public class Broom {
         }
     }
     
-    public void discardCard(Card c){
+    public void discardCard(SpanishCard c){
         currentPlayer.discardCard(c);
     }
     
-    public ArrayList<Card> getHeap(){
+    public ArrayList<SpanishCard> getHeap(){
         return currentPlayer.getHeap();
     }
     
-    public ArrayList<Card> getCards(){
+    public ArrayList<SpanishCard> getCards(){
         return currentPlayer.getCards();
     }
     
@@ -381,7 +391,7 @@ public class Broom {
         return players;
     }
 
-    public ArrayList<Card> getTableCards() {
+    public ArrayList<SpanishCard> getTableCards() {
         return cards;
     }
 
@@ -389,24 +399,31 @@ public class Broom {
         return currentServerPlayerIndex;
     }
     
-    public boolean goodMove(Card c, ArrayList<Card> selected){
-        boolean good = currentPlayer.goodMove(c,selected);
-        
-        if (good){
-            lastPlayer = currentPlayerIndex;
+    public boolean goodMove(SpanishCard c, ArrayList<SpanishCard> selected){
+        if (currentPlayer instanceof CPUPlayer){
+            ((CPUPlayer)currentPlayer).playCPU(cards);
+            return true;
         }
+        else{
+            boolean good = currentPlayer.goodMove(c,selected);
         
-        return good;
+            if (good){
+                lastPlayer = currentPlayerIndex;
+            }
+        
+            return good;
+        }
     }
     
-    public void setNewCard(Card c){
+    public void setNewCard(SpanishCard c){
         currentPlayer.setNewCard(c, cards);
     }
     
     public void discardTableCard(Card c){
         cards.remove(c);
     }
-    public int getCardsLeft(){
-        return Dealer.getInstance().getDeck().size();
+    
+    public Player getMyPlayer(){
+        return players.get(0);
     }
 }
