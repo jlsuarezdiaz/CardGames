@@ -237,12 +237,17 @@ public class Broom {
         
         ArrayList<Prize> prizes = new ArrayList<>();
         
+        
         for (Player p: players){
             prizes.add(p.estimatePoints());
         }
         
         //vemos quien ha ganado la ronda.
         compareScore(prizes);
+        
+        for (Player p: players){
+            p.setScore(p.getBrooms());
+        }  
     }
     
     private void compareScore(ArrayList<Prize> pr){        

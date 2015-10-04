@@ -9,6 +9,7 @@ import GUI.CardView;
 import GUI.SpanishCardBack;
 import Games.Broom.Model.Broom;
 import Games.Broom.Model.Player;
+import Model.Card;
 import Model.SpanishCard;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -40,23 +41,10 @@ public class CPUPlayerView extends javax.swing.JPanel {
         playerModel = p;
         name.setText(playerModel.getName());
         score.setText(Integer.toString(playerModel.getTotalPoints()));
-        fillCardPanel(cards,playerModel.getCards());
+        this.cards.addSelectionAtMouseListening();
+        this.cards.add((ArrayList<Card>)(ArrayList<? extends Card>)playerModel.getCards(), SpanishCardBack.RED, true);
         repaint();
         revalidate();
-    }
-    
-    public void fillCardPanel (JPanel aPanel,ArrayList <SpanishCard> aList){
-        aPanel.removeAll();
-        
-        for(SpanishCard t: aList){
-            CardView aCardView = new CardView();
-            aCardView.setCard(t,SpanishCardBack.RED,true);
-            aCardView.setVisible(true);
-            aPanel.add(aCardView);
-        }
-        
-        aPanel.repaint();
-        aPanel.revalidate();
     }
     
     /**
@@ -77,30 +65,23 @@ public class CPUPlayerView extends javax.swing.JPanel {
 
         name = new javax.swing.JLabel();
         score = new javax.swing.JLabel();
-        cards = new javax.swing.JPanel();
+        cards = new GUI.Hand();
 
         name.setText("Nombre");
 
         score.setText("Score");
-
-        cards.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        cards.setLayout(new javax.swing.BoxLayout(cards, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cards, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(name))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(cards, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(name))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,14 +91,14 @@ public class CPUPlayerView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(score)
                 .addGap(18, 18, 18)
-                .addComponent(cards, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addComponent(cards, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel cards;
+    private GUI.Hand cards;
     private javax.swing.JLabel name;
     private javax.swing.JLabel score;
     // End of variables declaration//GEN-END:variables

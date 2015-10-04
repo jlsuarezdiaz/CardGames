@@ -11,8 +11,10 @@ import GUI.SpanishCardBack;
 import Games.Broom.Model.Broom;
 import Games.Broom.Model.Player;
 import Games.Poker.Model.CPUPlayer;
+import Model.Card;
 import Model.SpanishCard;
 import java.awt.Component;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -33,33 +35,47 @@ public class BroomView extends javax.swing.JFrame {
         
         
         currentPlayer = escobaModel.getCurrentPlayer();        
-        fillCardPanel(table,escobaModel.getTableCards());
+        this.table.addSelectionAtMouseListening();
+        this.table.add((ArrayList<Card>)(ArrayList<? extends Card>)escobaModel.getTableCards(), SpanishCardBack.RED, false);
 
+        turno_actual.setText(currentPlayer.getName());
         play.setEnabled(true);
         repaint();
         revalidate();
     }   
-    
-    private void fillCardPanel(JPanel aPanel,ArrayList <SpanishCard> aList){
-        aPanel.removeAll();
-        
-        for(SpanishCard t: aList){
-            CardView aCardView = new CardView();
-            aCardView.setCard(t,SpanishCardBack.RED);
-            aCardView.setVisible(true);
-            aPanel.add(aCardView);
-        }
-        
-        aPanel.repaint();
-        aPanel.revalidate();
-    }
 
     public void showView(){
         this.setVisible(true);
         (new NarratorView(this)).showDialog("JUGAR", "Bienvenido a esta partida de la escoba.", "Pulsa el botón para empezar a jugar.", null);
-        escobaModel.nextTurn();
-        setBroom(escobaModel);
+        //escobaModel.nextTurn();
+        //setBroom(escobaModel);
+        gameManager();
     }
+    
+    public void gameManager(){
+        if(!escobaModel.nextDealAllowed()){ // si todavia tenemos cartas en la baraja
+            
+        }
+        else{
+            escobaModel.obtainPoints();
+            
+            if (escobaModel.endOfGame()){
+                ArrayList<Player> winners = escobaModel.tellTheWinner();
+                String w = "";
+                
+                for (Player p: winners){
+                    w += p.getName();
+                }
+                (new NarratorView(this)).showDialog("El ganador de la partida es...",w,"Gracias por jugar", null);
+                exit(-1);
+            }
+        }
+            
+    }
+    
+     private void performNext(){
+         
+     }
     /**
      * Creates new form BroomView
      */
@@ -76,16 +92,15 @@ public class BroomView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        table = new javax.swing.JPanel();
+        play = new javax.swing.JButton();
+        table = new GUI.Hand();
         player1 = new Games.Broom.GUI.PlayerView();
         CPU1 = new Games.Broom.GUI.CPUPlayerView();
         CPU2 = new Games.Broom.GUI.CPUPlayerView();
-        play = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        turno_actual = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        table.setBorder(javax.swing.BorderFactory.createTitledBorder("Mesa"));
-        table.setLayout(new java.awt.GridBagLayout());
 
         play.setText("Jugar");
         play.addActionListener(new java.awt.event.ActionListener() {
@@ -94,43 +109,59 @@ public class BroomView extends javax.swing.JFrame {
             }
         });
 
+        table.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setText("Turno de --> ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addComponent(CPU1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(87, 87, 87)
+                        .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(306, 306, 306)
-                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 310, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(235, 235, 235)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(turno_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(35, 35, 35))
+                            .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE))
+                        .addGap(0, 224, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CPU1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
+                .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(CPU1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85))))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(turno_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72)
+                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         pack();
@@ -158,7 +189,6 @@ public class BroomView extends javax.swing.JFrame {
             escobaModel.goodMove(null,null);
         }
         else{
-        
             ArrayList<SpanishCard> selected = getSelectedTableCards(table);        
             ArrayList<SpanishCard> s = player1.getSelectedCard(player1.getCards());
 
@@ -238,8 +268,10 @@ public class BroomView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Games.Broom.GUI.CPUPlayerView CPU1;
     private Games.Broom.GUI.CPUPlayerView CPU2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton play;
     private Games.Broom.GUI.PlayerView player1;
-    private javax.swing.JPanel table;
+    private GUI.Hand table;
+    private javax.swing.JTextField turno_actual;
     // End of variables declaration//GEN-END:variables
 }
