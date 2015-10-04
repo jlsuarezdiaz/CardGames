@@ -39,7 +39,6 @@
                               <Component id="player1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
                               <Component id="play" min="-2" pref="118" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Component id="table" pref="976" max="32767" attributes="0"/>
                       </Group>

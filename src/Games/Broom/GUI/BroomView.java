@@ -166,7 +166,7 @@ public class BroomView extends javax.swing.JFrame {
     
     private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
         if (escobaModel.getCurrentPlayer() != escobaModel.getMyPlayer()){
-            escobaModel.playCPU();
+             escobaModel.playCPU();
         }
         else{
             ArrayList<SpanishCard> selected = (ArrayList<SpanishCard>)(ArrayList<? extends Card>)this.table.getSelectedCards();
