@@ -132,7 +132,9 @@ public class CPUPlayer extends Player implements Cloneable {
 					}
 				}
 			}
-			//TODO Poner en la mesa una carta al azar de las que esten en b
+			//Vale "Azar = Primera"?
+			cards.remove(b.get(0)); //XXX El setNewCard no la elimina del player (creo)
+			setNewCard(b.get(0), table);
 		} else {
 			Jugada jugada = null;
 			int cards = 0, value = 0;
@@ -155,7 +157,12 @@ public class CPUPlayer extends Player implements Cloneable {
 					value = 1;
 				}
 			}
-			//TODO Coger las cartas que indica jugada.hand y jugada.table
+			this.cards.remove(jugada.hand);
+			this.heap.add(jugada.hand);
+			for (SpanishCard c : jugada.table) {
+				table.remove(c);
+				heap.add(c);
+			}
 		}
     }
         

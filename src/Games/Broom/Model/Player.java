@@ -16,7 +16,7 @@ public class Player {
     private String name;
     private int total_points;
     protected ArrayList<SpanishCard> cards;
-    private ArrayList<SpanishCard> heap;
+    protected ArrayList<SpanishCard> heap;
     private int brooms;
     
     public Player(String name){
