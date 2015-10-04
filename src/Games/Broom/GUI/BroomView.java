@@ -48,12 +48,21 @@ public class BroomView extends javax.swing.JFrame {
     }   
     
     private void paint(){
-        if (currentPlayer == escobaModel.getMyPlayer())
+        if (currentPlayer == escobaModel.getMyPlayer()){
             player1.setBackground(Color.RED);
-        else if (currentPlayer == escobaModel.getPlayers().get(0))
+            CPU1.setBackground(Color.darkGray);
+            CPU2.setBackground(Color.darkGray);
+        }
+        else if (currentPlayer == escobaModel.getPlayers().get(1)){
+            player1.setBackground(Color.darkGray);
+            CPU2.setBackground(Color.darkGray);
             CPU1.setBackground(Color.RED);
-        else
+        }
+        else{
+            player1.setBackground(Color.darkGray);
+            CPU1.setBackground(Color.darkGray);
             CPU2.setBackground(Color.RED);
+        }   
     }
 
     public void showView(){
