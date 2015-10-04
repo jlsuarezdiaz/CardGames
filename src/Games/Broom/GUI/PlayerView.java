@@ -43,6 +43,8 @@ public class PlayerView extends javax.swing.JPanel {
         playerModel = p;
         name.setText(playerModel.getName());
         score.setText(Integer.toString(playerModel.getTotalPoints()));
+        
+        this.cards.removeAll();
         this.cards.addSelectionAtMouseListening();
         this.cards.add((ArrayList<Card>)(ArrayList<? extends Card>)playerModel.getCards(), SpanishCardBack.RED, false);
         repaint();

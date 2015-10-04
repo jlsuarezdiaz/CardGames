@@ -13,6 +13,7 @@ import Games.Broom.Model.Player;
 import Games.Poker.Model.CPUPlayer;
 import Model.Card;
 import Model.SpanishCard;
+import java.awt.Color;
 import java.awt.Component;
 import static java.lang.System.exit;
 import java.util.ArrayList;
@@ -34,27 +35,38 @@ public class BroomView extends javax.swing.JFrame {
         CPU2.setPlayer(escobaModel.getPlayers().get(2));       
         
         
-        currentPlayer = escobaModel.getCurrentPlayer();        
+        currentPlayer = escobaModel.getCurrentPlayer(); 
+        
+        paint();
+        
+        this.table.removeAll();
         this.table.addSelectionAtMouseListening();
         this.table.add((ArrayList<Card>)(ArrayList<? extends Card>)escobaModel.getTableCards(), SpanishCardBack.RED, false);
 
-        turno_actual.setText(currentPlayer.getName());
         play.setEnabled(true);
         repaint();
         revalidate();
     }   
+    
+    private void paint(){
+        if (currentPlayer == escobaModel.getMyPlayer())
+            player1.setBackground(Color.RED);
+        else if (currentPlayer == escobaModel.getPlayers().get(0))
+            CPU1.setBackground(Color.RED);
+        else
+            CPU2.setBackground(Color.RED);
+    }
 
     public void showView(){
         this.setVisible(true);
         (new NarratorView(this)).showDialog("JUGAR", "Bienvenido a esta partida de la escoba.", "Pulsa el botón para empezar a jugar.", null);
-        //escobaModel.nextTurn();
-        //setBroom(escobaModel);
-        gameManager();
     }
     
     public void gameManager(){
         if(!escobaModel.nextDealAllowed()){ // si todavia tenemos cartas en la baraja
-            
+            if (currentPlayer != escobaModel.getMyPlayer()){
+                playActionPerformed(null);
+            }
         }
         else{
             escobaModel.obtainPoints();
@@ -72,10 +84,7 @@ public class BroomView extends javax.swing.JFrame {
         }
             
     }
-    
-     private void performNext(){
-         
-     }
+
     /**
      * Creates new form BroomView
      */
@@ -97,8 +106,6 @@ public class BroomView extends javax.swing.JFrame {
         player1 = new Games.Broom.GUI.PlayerView();
         CPU1 = new Games.Broom.GUI.CPUPlayerView();
         CPU2 = new Games.Broom.GUI.CPUPlayerView();
-        jLabel1 = new javax.swing.JLabel();
-        turno_actual = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,8 +117,6 @@ public class BroomView extends javax.swing.JFrame {
         });
 
         table.setLayout(new java.awt.GridBagLayout());
-
-        jLabel1.setText("Turno de --> ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,14 +135,9 @@ public class BroomView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(235, 235, 235)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(turno_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(35, 35, 35))
+                                .addGap(229, 229, 229)
+                                .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE))
                         .addGap(0, 224, Short.MAX_VALUE))))
         );
@@ -150,46 +150,27 @@ public class BroomView extends javax.swing.JFrame {
                     .addComponent(CPU2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(turno_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(72, 72, 72)
-                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    
-    private ArrayList<SpanishCard> getSelectedTableCards(JPanel aPanel){
-        CardView tv;
-        ArrayList<SpanishCard> output = new ArrayList<>();
-        
-        for (Component c: aPanel.getComponents()){
-            tv = (CardView)c;
-            
-            if (tv.isSelected())
-                output.add((SpanishCard)tv.getCard());
-        }
-        
-        return output;
-    }
-    
+   
     
     private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
         if (escobaModel.getCurrentPlayer() != escobaModel.getMyPlayer()){
             escobaModel.goodMove(null,null);
         }
         else{
-            ArrayList<SpanishCard> selected = getSelectedTableCards(table);        
+            ArrayList<SpanishCard> selected = (ArrayList<SpanishCard>)(ArrayList<? extends Card>)this.table.getSelectedCards();
             ArrayList<SpanishCard> s = player1.getSelectedCard(player1.getCards());
 
             boolean goodmove = escobaModel.goodMove(s.get(0),selected);
@@ -200,30 +181,16 @@ public class BroomView extends javax.swing.JFrame {
                 escobaModel.getTableCards().add(s.get(0));
             }
             else{
-                if (selected.size() == escobaModel.getTableCards().size()){
-                    player1.getPlayer().setScore(1);
-
-                    for (SpanishCard c:selected){
-                        player1.getPlayer().addCardHeap(c);
-                        escobaModel.discardTableCard(c);
-                    }
-
-                    player1.getPlayer().addCardHeap(s.get(0));
+                for (SpanishCard c:selected){
+                    player1.getPlayer().addCardHeap(c);
+                    escobaModel.discardTableCard(c);
                 }
-                else{
-                    for (SpanishCard c:selected){
-                        player1.getPlayer().addCardHeap(c);
-                        escobaModel.discardTableCard(c);
-                    }
 
-                    player1.getPlayer().addCardHeap(s.get(0));
-               }
+                player1.getPlayer().addCardHeap(s.get(0));
             }
 
             escobaModel.nextTurn();
-
             setBroom(escobaModel);
-            play.setEnabled(false);
         }
         
         repaint();
@@ -268,10 +235,8 @@ public class BroomView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Games.Broom.GUI.CPUPlayerView CPU1;
     private Games.Broom.GUI.CPUPlayerView CPU2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton play;
     private Games.Broom.GUI.PlayerView player1;
     private GUI.Hand table;
-    private javax.swing.JTextField turno_actual;
     // End of variables declaration//GEN-END:variables
 }
