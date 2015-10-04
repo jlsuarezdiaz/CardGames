@@ -178,10 +178,10 @@ public class BroomView extends javax.swing.JFrame {
 
                 player1.getPlayer().addCardHeap(s.get(0));
             }
-
-            nextPerform();
-            setBroom(escobaModel);
         }
+            
+        nextPerform();
+        setBroom(escobaModel);
         
         repaint();
         revalidate();
