@@ -47,9 +47,9 @@ public class Broom {
     
     private void initPlayers(ArrayList<String> names){
         if (!names.isEmpty()){
-            for (String n: names){
-                players.add(new Player(n));
-            }
+            players.add(new Player(names.get(0)));
+            players.add(new CPUPlayer(names.get(1)));
+            players.add(new CPUPlayer(names.get(2)));            
         }
     }
     
@@ -415,21 +415,18 @@ public class Broom {
     }
     
     public boolean goodMove(SpanishCard c, ArrayList<SpanishCard> selected){
-        if (currentPlayer instanceof CPUPlayer){
-            ((CPUPlayer)currentPlayer).playCPU(cards);
-            return true;
-        }
-        else{
-            boolean good = currentPlayer.goodMove(c,selected);
+        boolean good = currentPlayer.goodMove(c,selected);
         
-            if (good){
-                lastPlayer = currentPlayerIndex;
-            }
-        
-            return good;
+        if (good){
+            lastPlayer = currentPlayerIndex;
         }
+        
+        return good;
     }
-    
+
+    public void playCPU(){
+        ((CPUPlayer)currentPlayer).playCPU(cards);
+    }
     public void setNewCard(SpanishCard c){
         currentPlayer.setNewCard(c, cards);
     }
