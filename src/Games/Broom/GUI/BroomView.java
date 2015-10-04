@@ -25,7 +25,6 @@ import javax.swing.JPanel;
  */
 public class BroomView extends javax.swing.JFrame {
     private Broom escobaModel;
-    //private static int RONDAS = 0;
     private Player currentPlayer;
     
     public void setBroom(Broom escobaModel){
@@ -61,30 +60,21 @@ public class BroomView extends javax.swing.JFrame {
         this.setVisible(true);
         (new NarratorView(this)).showDialog("JUGAR", "Bienvenido a esta partida de la escoba.", "Pulsa el botón para empezar a jugar.", null);
     }
-    
-    public void gameManager(){
-        if(!escobaModel.nextDealAllowed()){ // si todavia tenemos cartas en la baraja
-            if (currentPlayer != escobaModel.getMyPlayer()){
-                playActionPerformed(null);
-            }
-        }
-        else{
-            escobaModel.obtainPoints();
-            
-            if (escobaModel.endOfGame()){
-                ArrayList<Player> winners = escobaModel.tellTheWinner();
-                String w = "";
-                
-                for (Player p: winners){
-                    w += p.getName();
-                }
-                (new NarratorView(this)).showDialog("El ganador de la partida es...",w,"Gracias por jugar", null);
-                exit(-1);
-            }
-        }
-            
-    }
 
+    private void nextPerform(){
+        escobaModel.nextTurn();
+        
+        if (escobaModel.endOfGame()){
+            ArrayList<Player> winners = escobaModel.tellTheWinner();
+            String w = "";
+                
+            for (Player p: winners)
+                w += p.getName();
+            
+            (new NarratorView(this)).showDialog("El ganador de la partida es...",w,"Gracias por jugar", null);
+        }
+    }
+    
     /**
      * Creates new form BroomView
      */
@@ -189,7 +179,7 @@ public class BroomView extends javax.swing.JFrame {
                 player1.getPlayer().addCardHeap(s.get(0));
             }
 
-            escobaModel.nextTurn();
+            nextPerform();
             setBroom(escobaModel);
         }
         

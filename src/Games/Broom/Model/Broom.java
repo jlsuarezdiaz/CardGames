@@ -103,7 +103,8 @@ public class Broom {
                 j = (j+1)%players.size();
             }
         }
-        else{
+        else{ // se acabaron todas las cartas.
+            resetGame();
             initCardsTable();
             
             currentServerPlayerIndex = currentPlayerIndex;
@@ -439,5 +440,9 @@ public class Broom {
     
     public Player getMyPlayer(){
         return players.get(0);
+    }
+    
+    public SpanishDeck getDeck(){
+        return deck;
     }
 }
