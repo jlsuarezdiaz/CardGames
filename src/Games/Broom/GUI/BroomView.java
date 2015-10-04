@@ -6,6 +6,7 @@
 package Games.Broom.GUI;
 
 import GUI.CardView;
+import GUI.NarratorView;
 import GUI.SpanishCardBack;
 import Games.Broom.Model.Broom;
 import Games.Broom.Model.Player;
@@ -21,11 +22,9 @@ import javax.swing.JPanel;
  */
 public class BroomView extends javax.swing.JFrame {
     private Broom escobaModel;
-    private static int RONDAS = 0;
+    //private static int RONDAS = 0;
     private Player currentPlayer;
-    private void setRondas(){
-        RONDAS++;
-    }
+    
     public void setBroom(Broom escobaModel){
         this.escobaModel = escobaModel;
         player1.setPlayer(escobaModel.getMyPlayer());
@@ -55,8 +54,11 @@ public class BroomView extends javax.swing.JFrame {
         aPanel.revalidate();
     }
 
-    public void showView() {
+    public void showView(){
         this.setVisible(true);
+        (new NarratorView(this)).showDialog("JUGAR", "Bienvenido a esta partida de la escoba.", "Pulsa el botón para empezar a jugar.", null);
+        escobaModel.nextTurn();
+        setBroom(escobaModel);
     }
     /**
      * Creates new form BroomView
@@ -188,7 +190,7 @@ public class BroomView extends javax.swing.JFrame {
                }
             }
 
-            //escobaModel.nextTurn(escobaModel.getCards());
+            escobaModel.nextTurn();
 
             setBroom(escobaModel);
             play.setEnabled(false);

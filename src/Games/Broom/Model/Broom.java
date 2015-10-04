@@ -31,9 +31,17 @@ public class Broom {
         currentPlayer = null;
         cards = new ArrayList<>();
         players = new ArrayList<>();
+        deck = new SpanishDeck();
     }
     
     public Broom(ArrayList<String> names){
+        currentPlayerIndex = -1;
+        currentServerPlayerIndex = -1;
+        lastPlayer = -1;
+        currentPlayer = null;
+        cards = new ArrayList<>();
+        players = new ArrayList<>();
+        deck = new SpanishDeck();
         initGame(names);
     }
     
@@ -128,8 +136,8 @@ public class Broom {
     
     public void initGame(ArrayList<String> players){
         initPlayers(players);
-        SpanishDeck deck = initCardsTable();
-        nextTurn(deck);
+        initCardsTable();
+        nextTurn();
     }
     
     public void resetGame(){
@@ -151,13 +159,13 @@ public class Broom {
         }
     }
     
-    public boolean nextTurn(SpanishDeck deck){        
+    public boolean nextTurn(){        
         boolean state;
         
         if (nextDealAllowed()){    
             currentPlayer = nextPlayer();   
  
-            state = giveCardsToPlayers(deck);
+            state = giveCardsToPlayers(this.deck);
         }
         else{
             if (currentServerPlayerIndex == -1)

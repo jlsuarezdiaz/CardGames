@@ -18,12 +18,19 @@ public class BroomIntro extends javax.swing.JDialog {
     public BroomIntro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        broom = null;
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 System.exit(0);
             }
         });
+    }
+    
+    public Broom getBroom(){
+        btPlay.setEnabled(!nameText.getText().trim().isEmpty());
+        this.setVisible(true);
+        return broom;
     }
 
     /**
@@ -57,6 +64,11 @@ public class BroomIntro extends javax.swing.JDialog {
         jLabel1.setText("Nombre del jugador");
 
         nameText.setText("jTextField1");
+        nameText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTextKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +113,10 @@ public class BroomIntro extends javax.swing.JDialog {
         broom = new Broom(names);
         this.dispose();
     }//GEN-LAST:event_btPlayActionPerformed
+
+    private void nameTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextKeyReleased
+        btPlay.setEnabled(!nameText.getText().trim().isEmpty());
+    }//GEN-LAST:event_nameTextKeyReleased
 
     /**
      * @param args the command line arguments

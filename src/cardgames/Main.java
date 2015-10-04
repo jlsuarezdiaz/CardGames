@@ -5,6 +5,8 @@
  */
 package cardgames;
 
+import Games.Broom.GUI.BroomIntro;
+import Games.Broom.GUI.BroomView;
 import Games.Poker.GUI.PokerIntro;
 import Games.Poker.GUI.PokerView;
 import Games.SotaCabrona.GUI.SotaCabronaIntro;
@@ -60,8 +62,10 @@ public class Main {
                 runGameSelection();
                 break;
             case BROOM:
-                showNotImplementedMessage();
-                runGameSelection();
+                BroomView broomView = new BroomView();
+                BroomIntro broomIntro = new BroomIntro(broomView,true);
+                broomView.setBroom(broomIntro.getBroom());
+                broomView.showView();
                 break;
             case SOLITAIRE:
                 showNotImplementedMessage();
