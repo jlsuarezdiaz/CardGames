@@ -125,6 +125,10 @@ public class Player {
     public int getBrooms(){
         return brooms;
     }
+    
+    public void removeBrooms(){
+        brooms = 0;
+    }
 
     @SuppressWarnings("unchecked")
     public ArrayList<SpanishCard> getCards() {

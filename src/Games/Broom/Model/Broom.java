@@ -229,15 +229,21 @@ public class Broom {
         
         
         for (Player p: players){
+            p.setScore(p.getBrooms());
+        } 
+        
+        for (Player p:players){
+            p.removeBrooms();
+        }
+        
+        for (Player p: players){
             prizes.add(p.estimatePoints());
         }
         
         //vemos quien ha ganado la ronda.
         compareScore(prizes);
         
-        for (Player p: players){
-            p.setScore(p.getBrooms());
-        }  
+ 
     }
     
     private void compareScore(ArrayList<Prize> pr){        
