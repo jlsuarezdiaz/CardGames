@@ -181,6 +181,8 @@ public class CPUPlayer extends Player implements Cloneable {
                     }
             }
             
+
+            checkBroom(jugada,table);
             this.cards.remove(jugada.hand);
             this.heap.add(jugada.hand);
             for (SpanishCard c : jugada.table) {
@@ -188,6 +190,11 @@ public class CPUPlayer extends Player implements Cloneable {
                     heap.add(c);
             }
         }
+    }
+    
+    private void checkBroom(Jugada jugada, ArrayList<SpanishCard> table){
+         if(jugada.table.size() == table.size())
+             this.addBrooms();
     }
         
 }

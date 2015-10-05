@@ -44,7 +44,7 @@ public class CPUPlayerView extends javax.swing.JPanel {
         
         this.cards.removeAll();
         //this.cards.addSelectionAtMouseListening();
-        this.cards.add((ArrayList<Card>)(ArrayList<? extends Card>)playerModel.getCards(), SpanishCardBack.RED, true);
+        this.cards.add((ArrayList<Card>)(ArrayList<? extends Card>)playerModel.getCards(), SpanishCardBack.RED, false);
         repaint();
         revalidate();
     }

@@ -111,6 +111,8 @@ public class Broom {
             currentPlayerIndex = (currentServerPlayerIndex+1)%players.size();
             currentPlayer = players.get(currentPlayerIndex);
             
+            giveCardsToPlayers(this.deck);
+            
             state = false;
         }
         
@@ -141,18 +143,7 @@ public class Broom {
         nextTurn();
     }
     
-    public void resetGame(){
-        ArrayList<SpanishCard> copia = new ArrayList<>(cards);
-        
-        System.out.println(Integer.toString(lastPlayer));
-        
-        for (SpanishCard c: copia){
-            players.get(lastPlayer).addCard(c);
-        }
-        
-        cards.clear();
-        
-        initCardsTable();
+    public void resetGame(){       
         obtainPoints();
         
         for (Player p:players){
@@ -190,8 +181,7 @@ public class Broom {
         return true;
     }
      
-    
-    
+
     //////////////////////////
     public boolean endOfGame(){
         boolean winner = false;
@@ -228,13 +218,12 @@ public class Broom {
         return winners;
     }
     
-    public void obtainPoints(){
-        ArrayList<SpanishCard> copia = new ArrayList<>(cards);
-                
-        for (SpanishCard c: copia){
-            players.get(lastPlayer).addCard(c);
+    public void obtainPoints(){               
+        for (SpanishCard c: cards){
+            players.get(lastPlayer).addCardHeap(c);
         }
         
+        cards.clear();
         
         ArrayList<Prize> prizes = new ArrayList<>();
         
@@ -419,6 +408,10 @@ public class Broom {
         
         if (good){
             lastPlayer = currentPlayerIndex;
+        }
+        
+        if (cards.size() == selected.size() && good){
+            currentPlayer.addBrooms();
         }
         
         return good;

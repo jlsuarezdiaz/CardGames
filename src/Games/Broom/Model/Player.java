@@ -42,7 +42,6 @@ public class Player {
         int sum = 0;
         
         for (SpanishCard card: table){
-            
             sum += Integer.valueOf(card.getValue()) >= 10 ? Integer.valueOf(card.getValue())-2 : Integer.valueOf(card.getValue());
         }
         
@@ -50,12 +49,15 @@ public class Player {
       
         if (sum == 15){
             good = true;
-            brooms++;
         }
         else
             good = false;
         
         return good;
+    }
+    
+    public void addBrooms(){
+        brooms++;
     }
     
     public void setNewCard(SpanishCard c,ArrayList<SpanishCard> table){
