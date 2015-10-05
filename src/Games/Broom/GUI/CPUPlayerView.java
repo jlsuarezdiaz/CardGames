@@ -43,7 +43,7 @@ public class CPUPlayerView extends javax.swing.JPanel {
         score.setText(Integer.toString(playerModel.getTotalPoints()));
         
         this.cards.removeAll();
-        this.cards.addSelectionAtMouseListening();
+        //this.cards.addSelectionAtMouseListening();
         this.cards.add((ArrayList<Card>)(ArrayList<? extends Card>)playerModel.getCards(), SpanishCardBack.RED, true);
         repaint();
         revalidate();

@@ -28,6 +28,8 @@ public class CPUPlayer extends Player implements Cloneable {
 			copia.table = (ArrayList<SpanishCard>) this.table.clone();
 			return copia;
 		}
+                
+                
 		
         public int puntuacion() {
             int sum = 0;
@@ -85,7 +87,7 @@ public class CPUPlayer extends Player implements Cloneable {
 	
 	private void generaJugadasRecursivo(ArrayList<SpanishCard> mesa, ArrayList<Jugada> jugadas, Jugada actual) {
 		for (SpanishCard c : mesa) {
-			ArrayList<SpanishCard> cpmesa = (ArrayList<SpanishCard>) mesa.clone();
+			ArrayList<SpanishCard> cpmesa = new ArrayList<>(mesa);
 			cpmesa.remove(c);
 			Jugada cpjug;
 			try {
