@@ -99,7 +99,7 @@ public class Player {
     private boolean found7Oros(){
         boolean found = false;
         
-        for(Card c: heap){
+        for(SpanishCard c: heap){
             if (c.getSuit() == SpanishSuit.COINS && Integer.valueOf(c.getValue()) == 7){
                 found = true;
             }
