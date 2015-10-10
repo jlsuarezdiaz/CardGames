@@ -68,6 +68,9 @@ public class PlayerView extends javax.swing.JPanel {
                 output.add((SpanishCard)tv.getCard());
         }
         
+        if (output.isEmpty())
+            return output;
+        
         setCard(output.get(0));
         
         return output;

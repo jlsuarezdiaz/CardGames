@@ -50,17 +50,17 @@ public class BroomView extends javax.swing.JFrame {
     private void paint(){
         if (currentPlayer == escobaModel.getMyPlayer()){
             player1.setBackground(Color.RED);
-            CPU1.setBackground(Color.darkGray);
-            CPU2.setBackground(Color.darkGray);
+            CPU1.setBackground(Color.LIGHT_GRAY);
+            CPU2.setBackground(Color.LIGHT_GRAY);
         }
         else if (currentPlayer == escobaModel.getPlayers().get(1)){
-            player1.setBackground(Color.darkGray);
-            CPU2.setBackground(Color.darkGray);
+            player1.setBackground(Color.LIGHT_GRAY);
+            CPU2.setBackground(Color.LIGHT_GRAY);
             CPU1.setBackground(Color.RED);
         }
         else{
-            player1.setBackground(Color.darkGray);
-            CPU1.setBackground(Color.darkGray);
+            player1.setBackground(Color.LIGHT_GRAY);
+            CPU1.setBackground(Color.LIGHT_GRAY);
             CPU2.setBackground(Color.RED);
         }   
     }
@@ -167,30 +167,35 @@ public class BroomView extends javax.swing.JFrame {
     private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
         if (escobaModel.getCurrentPlayer() != escobaModel.getMyPlayer()){
             escobaModel.playCPU();
+            
+            nextPerform();
+            setBroom(escobaModel);
         }
         else{
             ArrayList<SpanishCard> selected = (ArrayList<SpanishCard>)(ArrayList<? extends Card>)this.table.getSelectedCards();
             ArrayList<SpanishCard> s = player1.getSelectedCard(player1.getCards());
 
-            boolean goodmove = escobaModel.goodMove(s.get(0),selected);
+            if (!(s.isEmpty() || s.isEmpty())){
+                boolean goodmove = escobaModel.goodMove(s.get(0),selected);
 
-            player1.getPlayer().discardCard(s.get(0));
+                player1.getPlayer().discardCard(s.get(0));
 
-            if (!goodmove){
-                escobaModel.getTableCards().add(s.get(0));
-            }
-            else{
-                for (SpanishCard c:selected){
-                    player1.getPlayer().addCardHeap(c);
-                    escobaModel.discardTableCard(c);
+                if (!goodmove){
+                    escobaModel.getTableCards().add(s.get(0));
                 }
+                else{
+                    for (SpanishCard c:selected){
+                        player1.getPlayer().addCardHeap(c);
+                        escobaModel.discardTableCard(c);
+                    }
 
-                player1.getPlayer().addCardHeap(s.get(0));
+                    player1.getPlayer().addCardHeap(s.get(0));
+                }
+                            
+                nextPerform();
+                setBroom(escobaModel);
             }
         }
-            
-        nextPerform();
-        setBroom(escobaModel);
         
         repaint();
         revalidate();
