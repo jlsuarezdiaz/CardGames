@@ -80,7 +80,9 @@ public class BroomView extends javax.swing.JFrame {
             for (Player p: winners)
                 w += p.getName();
             
-            (new NarratorView(this)).showDialog("El ganador de la partida es...",w,"Gracias por jugar", null);
+            (new NarratorView(this)).showDialog("Gracias por jugar","El ganador de la partida es...",w, null);
+            
+            System.exit(0);
         }
     }
     
