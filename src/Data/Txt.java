@@ -43,10 +43,10 @@ public class Txt {
      */
     public static final String[][] AUTHORS = {
         {"MAIN","Interfaz principal","Juan Luis Suárez Díaz"},
-        {"GRAPHICS","Aportación de cartas gráficas","José María Jiménez Mérida","Javier Poyatos Amador","Juan Luis Suárez Díaz"},
+        {"GRAPHICS","Aportación de cartas gráficas","Jose María Jiménez Mérida","Javier Poyatos Amador","Juan Luis Suárez Díaz"},
         {"GAME","Póker de 5","Juan Luis Suárez Díaz"},
         {"GAME","Sota Cabrona","Juan Luis Suárez Díaz"},
-        {"GAME", "Escoba","José María Jiménez Mérida","Javier Poyatos Amador"},
+        {"GAME", "Escoba","Jose María Jiménez Mérida","Javier Poyatos Amador"},
         {"THANKS","Stack Overflow","Aportaciones a la mejora y solución de errores en el código."},
         {"THANKS","www.jfitz.com","Baraja francesa digital de calidad."}    
     };
