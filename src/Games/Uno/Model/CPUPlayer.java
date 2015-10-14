@@ -5,10 +5,12 @@
  */
 package Games.Uno.Model;
 
+import javax.swing.Timer;
+
 /**
  *
  * @author Javier
  */
 public class CPUPlayer {
-    
+    private Timer CPUBrain;
 }

@@ -36,7 +36,7 @@ public class ProgramStart extends javax.swing.JDialog {
         picLab = new javax.swing.JLabel();
         timeBar = new javax.swing.JProgressBar();
         titleLab = new javax.swing.JLabel();
-        authorLab = new javax.swing.JLabel();
+        editionLab = new javax.swing.JLabel();
         versionLab = new javax.swing.JLabel();
         copyrightLab = new javax.swing.JLabel();
 
@@ -53,17 +53,17 @@ public class ProgramStart extends javax.swing.JDialog {
         titleLab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLab.setText("<html><div style=\"text-align: center;\"> JUEGOS DE <br>   CARTAS </html>");
 
-        authorLab.setFont(new java.awt.Font("Calibri", 2, 11)); // NOI18N
-        authorLab.setForeground(new java.awt.Color(0, 0, 255));
-        authorLab.setText("Juan Luis Suárez Díaz");
+        editionLab.setFont(new java.awt.Font("Calibri", 2, 11)); // NOI18N
+        editionLab.setForeground(new java.awt.Color(0, 0, 255));
+        editionLab.setText(Data.Txt.EDITION);
 
         versionLab.setFont(new java.awt.Font("Calibri", 2, 11)); // NOI18N
         versionLab.setForeground(new java.awt.Color(0, 0, 255));
-        versionLab.setText("v1.0 ");
+        versionLab.setText(Data.Txt.VERSION + " ");
 
         copyrightLab.setFont(new java.awt.Font("Calibri", 2, 11)); // NOI18N
         copyrightLab.setForeground(new java.awt.Color(0, 0, 255));
-        copyrightLab.setText("© 2015");
+        copyrightLab.setText(Data.Txt.COPYRIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,7 +83,7 @@ public class ProgramStart extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(authorLab, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editionLab, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(copyrightLab, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(versionLab, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -98,7 +98,7 @@ public class ProgramStart extends javax.swing.JDialog {
                 .addComponent(picLab, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(authorLab)
+                    .addComponent(editionLab)
                     .addComponent(versionLab))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(copyrightLab)
@@ -131,8 +131,8 @@ public class ProgramStart extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel authorLab;
     private javax.swing.JLabel copyrightLab;
+    private javax.swing.JLabel editionLab;
     private javax.swing.JLabel picLab;
     private javax.swing.JProgressBar timeBar;
     private javax.swing.JLabel titleLab;

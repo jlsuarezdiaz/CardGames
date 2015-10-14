@@ -46,7 +46,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="authorLab" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="editionLab" min="-2" pref="120" max="-2" attributes="0"/>
                           <Component id="copyrightLab" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -66,7 +66,7 @@
               <Component id="picLab" min="-2" pref="144" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="authorLab" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="editionLab" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="versionLab" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -100,7 +100,7 @@
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center;&quot;&gt; JUEGOS DE &lt;br&gt;   CARTAS &lt;/html&gt;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="authorLab">
+    <Component class="javax.swing.JLabel" name="editionLab">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Calibri" size="11" style="2"/>
@@ -108,7 +108,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Juan Luis Su&#xe1;rez D&#xed;az"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Data.Txt.EDITION" type="code"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="versionLab">
@@ -119,7 +121,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="v1.0 "/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Data.Txt.VERSION + &quot; &quot;" type="code"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="copyrightLab">
@@ -130,7 +134,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&#xa9; 2015"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Data.Txt.COPYRIGHT" type="code"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>
