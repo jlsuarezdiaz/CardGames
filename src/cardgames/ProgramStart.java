@@ -6,6 +6,7 @@
 package cardgames;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,13 +16,18 @@ import java.util.logging.Logger;
  * @author Juan Luis
  */
 public class ProgramStart extends javax.swing.JDialog {
-
+    private boolean ctrlPressed;
+    private boolean enterPressed;
+    
     /**
      * Creates new form ProgramStart
      */
     public ProgramStart(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setFocusable(true);
+        ctrlPressed=false;
+        enterPressed=false;
     }
 
     /**
@@ -45,6 +51,11 @@ public class ProgramStart extends javax.swing.JDialog {
         setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/program_icon.png")));
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         picLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/program_icon.png"))); // NOI18N
 
@@ -111,6 +122,15 @@ public class ProgramStart extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_CONTROL){
+            ctrlPressed=true;
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            enterPressed=true;
+        }
+    }//GEN-LAST:event_formKeyPressed
+
  
     
     public void showView(int ms){
@@ -121,6 +141,10 @@ public class ProgramStart extends javax.swing.JDialog {
             int i = 0;
             while(i <= ms){
                 i++;
+                if(ctrlPressed && enterPressed){
+                    this.dispose();
+                    return;
+                }
                 try {
                     sleep(1);
                 } catch (InterruptedException ex) {}
