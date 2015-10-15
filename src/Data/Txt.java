@@ -16,10 +16,10 @@ public class Txt {
      * String with info about old versions.
      */
     public static final String OLD_VERSIONS_INFO =
-            "Versión 1.0 (15/6/2015):"+
+            "Versión 1.0 (10/9/2015):"+
             "\n- Primer programa. Interfaz gráfica."+
             "\n- Nuevo juego: Póker de 5.\n\n"+
-            "Versión 1.1 (17/6/2015):"+
+            "Versión 1.1 (20/9/2015):"+
             "\n- Nuevo juego: Sota cabrona.\n\n"
             
             ;
@@ -69,8 +69,9 @@ public class Txt {
     /**
      * String with program info.
      */
-    
-    public static final String PROGRAM_INFO = "";/*"¿Buscas un servicio de mensajería divertido, eficaz y sencillo?\n"+
+    public static final String PROGRAM_INFO = "¿Te gustan los juegos de cartas? ¡Ahora puedes disfrutar desde tu ordenador "+
+            "de todos los juegos que te puedas imaginar!\nAbre el programa, elige tu juego, ¡y empieza a divertirte!";
+    /*"¿Buscas un servicio de mensajería divertido, eficaz y sencillo?\n"+
             "Con el nuevo Dropbox MSN, tendrás eso y mucho más.\nInvita a tus amigos, introduce un nombre, ¡y empieza a chatear!";
     */
 }

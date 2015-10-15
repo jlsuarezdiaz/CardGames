@@ -143,7 +143,6 @@
         <Component class="javax.swing.JEditorPane" name="txtProgramInfo">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n del programa"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -170,7 +169,6 @@
         <Component class="javax.swing.JEditorPane" name="txtAuthors">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n del programa"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -197,7 +195,6 @@
         <Component class="javax.swing.JEditorPane" name="txtLastVersion">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n del programa"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -224,7 +221,6 @@
         <Component class="javax.swing.JEditorPane" name="txtOldVersions">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Informaci&#xf3;n del programa"/>
           </Properties>
         </Component>
       </SubComponents>

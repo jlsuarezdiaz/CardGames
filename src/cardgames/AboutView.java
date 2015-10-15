@@ -115,7 +115,6 @@ public class AboutView extends javax.swing.JDialog {
         programInfoScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtProgramInfo.setEditable(false);
-        txtProgramInfo.setText("Información del programa");
         programInfoScroll.setViewportView(txtProgramInfo);
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -125,7 +124,6 @@ public class AboutView extends javax.swing.JDialog {
         authorsScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtAuthors.setEditable(false);
-        txtAuthors.setText("Información del programa");
         authorsScroll.setViewportView(txtAuthors);
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -135,7 +133,6 @@ public class AboutView extends javax.swing.JDialog {
         lastVersionScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtLastVersion.setEditable(false);
-        txtLastVersion.setText("Información del programa");
         lastVersionScroll.setViewportView(txtLastVersion);
 
         jLabel3.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -145,7 +142,6 @@ public class AboutView extends javax.swing.JDialog {
         oldVersionsScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         txtOldVersions.setEditable(false);
-        txtOldVersions.setText("Información del programa");
         oldVersionsScroll.setViewportView(txtOldVersions);
 
         versionLab.setFont(new java.awt.Font("Calibri", 2, 11)); // NOI18N
